@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FirestoreService } from './utils/services/web-services/firestore.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'cuyahoga-connect-demo';
+
+  constructor(private firestoreService: FirestoreService) {
+
+  }
+
+  get items() {
+    return this.firestoreService.itemsObs;
+  }
+
+  updateMonth(month: number) {
+    console.log(month);
+    this.firestoreService.month$.next(month);
+  }
 }
