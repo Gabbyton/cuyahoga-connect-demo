@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "cuyahoga-connect-demo": {
+      "hosting": {
+        "cuyahoga-connect-demo": [
+          "cuyahoga-connect-demo"
+        ]
+      }
+    }
+  }
+}
