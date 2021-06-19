@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Category } from './utils/data/models/category.model';
+import { CategoryService } from './utils/services/model-services/category.service';
 import { FirestoreService } from './utils/services/web-services/firestore.service';
 
 @Component({
@@ -6,19 +8,12 @@ import { FirestoreService } from './utils/services/web-services/firestore.servic
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'cuyahoga-connect-demo';
-
-  constructor(private firestoreService: FirestoreService) {
-
+  constructor(private categoryService: CategoryService) {
   }
 
-  get items() {
-    return this.firestoreService.itemsObs;
-  }
-
-  updateMonth(month: number) {
-    console.log(month);
-    this.firestoreService.month$.next(month);
+  ngOnInit(): void {
+    this.categoryService.prefetch();
   }
 }

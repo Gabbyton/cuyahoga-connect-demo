@@ -1,1 +1,19 @@
-<p>home works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="form-group">
+                <label for="month-select">Month:</label>
+                <select id="month-select" class="form-control" name="month-select">
+                    <option *ngFor="let month of months; index as i" [value]="i + 1">{{month}}</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="category-select">Category</label>
+                <select id="category-select" class="form-control" name="category-select">
+                    <option *ngFor="let category of categories; index as i" [value]="category">{{category.emoji}} {{category.longName}}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
