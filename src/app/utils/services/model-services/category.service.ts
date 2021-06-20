@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { first } from 'rxjs/operators';
 import { Category } from '../../data/models/category.model';
-import { FirestoreService } from '../web-services/firestore.service';
 
 @Injectable({
   providedIn: 'root'
