@@ -52,10 +52,13 @@ export class HomeComponent implements OnInit {
   }
 
   onSubmit(): void {
+    // get search parameters from form
     const month = parseInt(this.searchForm.value.month);
-    const category = this.searchForm.value.category.shortName;
+    const categoryObject = this.searchForm.value.category;
+    const category = categoryObject == null ? null : categoryObject.shortName;
     let filters: string[] = [];
     (this.searchForm.value.filters as Filter[]).forEach(filter => { filters.push(filter.shortName) });
+    // assign events to results
     this.displayEvents = this.previewEventService.getEvents(month, category, filters);
   }
 }
