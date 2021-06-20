@@ -14,6 +14,7 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { AddEventComponent } from './pages/add-event/add-event.component';
 import { CropperComponent } from './components/cropper/cropper.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { FilterSelectComponent } from './components/filter-select/filter-select.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     SearchWindowComponent,
     CalendarComponent,
     AddEventComponent,
-    CropperComponent
+    CropperComponent,
+    FilterSelectComponent
   ],
   imports: [
     BrowserModule,
