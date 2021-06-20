@@ -1,9 +1,9 @@
-<image-cropper [imageChangedEvent]="selectedImageEvent"
-    [maintainAspectRatio]="true" [aspectRatio]="1" format="png" [resizeToWidth]="720" [resizeToHeight]="480"
-    (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()">
-</image-cropper>
-
 <input style="display: none;" type="file" accept="image/*" (change)="onFileSelected($event)" #fileUploadInput>
 <button type="button" class="btn btn-outline-primary" (click)="fileUploadInput.click();">
     Upload File
 </button>
+
+<image-cropper [imageChangedEvent]="selectedImageEvent"
+    [maintainAspectRatio]="true" [aspectRatio]="1" format="png" [resizeToWidth]="720" [resizeToHeight]="480"
+    (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()" class="cropper">
+</image-cropper>
