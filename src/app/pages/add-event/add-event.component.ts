@@ -21,7 +21,6 @@ export class AddEventComponent implements OnInit {
     category: [],
     dateStart: [], // as ngbdstruct
     dateEnd: [], // as ngbdstruct
-    filters: [], // as filter ojects
     location: [],
     name: [],
     price: [],
@@ -44,6 +43,7 @@ export class AddEventComponent implements OnInit {
   });
   private thumbnail: File | null = null;
   private image: File | null = null;
+  private selectedFilters: string[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -61,7 +61,6 @@ export class AddEventComponent implements OnInit {
   }
 
   onSubmit(): void {
-
   }
 
   setThumbnail(thumbnail: File) {
@@ -72,12 +71,24 @@ export class AddEventComponent implements OnInit {
     this.image = image;
   }
 
+  get areFilesSet(): boolean {
+    return this.image != null && this.thumbnail != null;
+  }
+
+  setSelectedFilters(filters: string[]) {
+    this.selectedFilters = filters;
+  }
+
+  private get randomImageName(): string {
+    const suffix = Math.random().toString(36).substring(2);
+    return `${this.dateUtilsService.getCurrentDateinFormat('yyyy-MM-dd')}-${suffix}`;
+  }
+
   private getEventObject(results: any): Event {
     const dateStart = results.dateStart as NgbDateStruct;
     const dateEnd = results.dateEnd as NgbDateStruct;
     const dateStartTime = results.dateStartTime as NgbTimeStruct;
     const dateEndTime = results.dateEndTime as NgbTimeStruct;
-    const filters = results.filters as Filter[];
     let event: Event = {
       categories: [results.category],
       dateEndDay: dateEnd.day,
@@ -88,7 +99,7 @@ export class AddEventComponent implements OnInit {
       dateStartMillis: this.dateUtilsService.getDateMillis(dateStart, dateStartTime),
       dateStartMonth: dateStart.month,
       dateStartYear: dateStart.year,
-      filters: filters.map(filter => filter.shortName),
+      filters: this.selectedFilters, // get filters from component listener
       location: results.location,
       name: results.name,
       price: parseInt(results.price),
@@ -97,7 +108,7 @@ export class AddEventComponent implements OnInit {
     return event;
   }
 
-  getFullEventObject(results: any): FullEvent {
+  private getFullEventObject(results: any): FullEvent {
     const basicEvent: Event = Object.assign({}, this.getEventObject(results));
     const dateStartTime = results.dateStartTime as NgbTimeStruct;
     const dateEndTime = results.dateEndTime as NgbTimeStruct;
@@ -117,7 +128,7 @@ export class AddEventComponent implements OnInit {
     return { ...basicEvent, ...extraProperties } as FullEvent;
   }
 
-  getPreviewEventObject(results: any): PreviewEvent {
+  private getPreviewEventObject(results: any): PreviewEvent {
     const basicEvent: Event = Object.assign({}, this.getEventObject(results));
     const extraProperties = {
       eventId: '', // from firestore

@@ -15,6 +15,7 @@ import { AddEventComponent } from './pages/add-event/add-event.component';
 import { CropperComponent } from './components/cropper/cropper.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FilterSelectComponent } from './components/filter-select/filter-select.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { FilterSelectComponent } from './components/filter-select/filter-select.
     ReactiveFormsModule,
     ImageCropperModule,
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
