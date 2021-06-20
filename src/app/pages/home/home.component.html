@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <app-search-window></app-search-window>
+            <app-search-window (onEventLoaded)="setEvents($event)" (onStartSearch)="startLoading()"></app-search-window>
         </div>
     </div>
     <div class="row">

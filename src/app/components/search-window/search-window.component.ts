@@ -13,7 +13,8 @@ import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
   styleUrls: ['./search-window.component.scss']
 })
 export class SearchWindowComponent implements OnInit {
-  @Output('events') onDisplayEvent = new EventEmitter<PreviewEvent[]>();
+  @Output('onStartSearch') onStartSearch = new EventEmitter<void>();
+  @Output('onEventLoaded') onDisplayEvent = new EventEmitter<PreviewEvent[]>();
   searchForm = this.formBuilder.group({
     month: [],
     category: [],
@@ -52,6 +53,7 @@ export class SearchWindowComponent implements OnInit {
 
   onSubmit(): void {
     // get search parameters from form
+    this.onStartSearch.emit(); // signal that this component is starting search
     const month = parseInt(this.searchForm.value.month);
     const categoryObject = this.searchForm.value.category;
     const category = categoryObject == null ? null : categoryObject.shortName;
