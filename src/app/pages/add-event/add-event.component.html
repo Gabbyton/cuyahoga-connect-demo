@@ -113,7 +113,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <app-cropper (onCropped)="setThumbnail($event)"></app-cropper>
+                <app-cropper (onCropped)="setThumbnail($event)" (onImageSelected)="setImage($event)"></app-cropper>
             </div>
         </div>
         <div class="row">

@@ -8,6 +8,8 @@ import { base64ToFile, ImageCroppedEvent } from 'ngx-image-cropper';
 })
 export class CropperComponent implements OnInit {
   @Output('onCropped') onCropped = new EventEmitter<File>();
+  @Output('onImageSelected') onImageSelected = new EventEmitter<File>();
+
   selectedImageEvent: any = '';
   selectedImage: File | null = null;
 
@@ -28,8 +30,10 @@ export class CropperComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.selectedImageEvent = event;
-    if (event != null)
+    if (event != null) {
       this.selectedImage = event.target.files[0];
+      this.onImageSelected.emit(<File>this.selectedImage);
+    }
   }
 
 }

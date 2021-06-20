@@ -42,7 +42,8 @@ export class AddEventComponent implements OnInit {
     eventId: [], // from firestore
     previewImageURL: [], // from croppper
   });
-  thumbnail: File | null = null;
+  private thumbnail: File | null = null;
+  private image: File | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -65,6 +66,10 @@ export class AddEventComponent implements OnInit {
 
   setThumbnail(thumbnail: File) {
     this.thumbnail = thumbnail;
+  }
+
+  setImage(image: File) {
+    this.image = image;
   }
 
   private getEventObject(results: any): Event {
