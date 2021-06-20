@@ -16,13 +16,6 @@ import { Category } from 'src/app/utils/data/models/category.model';
   styleUrls: ['./add-event.component.scss']
 })
 export class AddEventComponent implements OnInit {
-  constructor(
-    private formBuilder: FormBuilder,
-    private dateUtilsService: DateService,
-    private categoryService: CategoryService,
-    private filterService: FilterService,
-  ) { }
-
   eventForm = this.formBuilder.group({
     // basic event
     category: [],
@@ -49,6 +42,14 @@ export class AddEventComponent implements OnInit {
     eventId: [], // from firestore
     previewImageURL: [], // from croppper
   });
+  thumbnail: File | null = null;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private dateUtilsService: DateService,
+    private categoryService: CategoryService,
+    private filterService: FilterService,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -60,6 +61,10 @@ export class AddEventComponent implements OnInit {
 
   onSubmit(): void {
 
+  }
+
+  setThumbnail(thumbnail: File) {
+    this.thumbnail = thumbnail;
   }
 
   private getEventObject(results: any): Event {
