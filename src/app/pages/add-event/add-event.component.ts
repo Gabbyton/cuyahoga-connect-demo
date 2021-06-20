@@ -6,6 +6,9 @@ import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
 import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { Filter } from 'src/app/utils/data/models/filter.model';
 import { DateService } from 'src/app/utils/services/general-services/date.service';
+import { CategoryService } from 'src/app/utils/services/model-services/category.service';
+import { FilterService } from 'src/app/utils/services/model-services/filter.service';
+import { Category } from 'src/app/utils/data/models/category.model';
 
 @Component({
   selector: 'app-add-event',
@@ -13,16 +16,16 @@ import { DateService } from 'src/app/utils/services/general-services/date.servic
   styleUrls: ['./add-event.component.scss']
 })
 export class AddEventComponent implements OnInit {
-  // dateStart: NgbDateStruct | undefined;
-  // dateEnd: NgbDateStruct | undefined;
   constructor(
     private formBuilder: FormBuilder,
     private dateUtilsService: DateService,
+    private categoryService: CategoryService,
+    private filterService: FilterService,
   ) { }
 
   eventForm = this.formBuilder.group({
     // basic event
-    categories: [],
+    category: [],
     dateStart: [], // as ngbdstruct
     dateEnd: [], // as ngbdstruct
     filters: [], // as filter ojects
@@ -50,6 +53,15 @@ export class AddEventComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  get categories(): readonly Category[] {
+    // return this.categoryService.categories;
+    return [];
+  }
+
+  onSubmit(): void {
+
+  }
+
   private getEventObject(results: any): Event {
     const dateStart = results.dateStart as NgbDateStruct;
     const dateEnd = results.dateEnd as NgbDateStruct;
@@ -63,7 +75,7 @@ export class AddEventComponent implements OnInit {
       dateEndMonth: dateEnd.month,
       dateEndYear: dateEnd.year,
       dateStartDay: dateStart.day,
-      dateStartMillis: this.dateUtilsService.getDateMillis(dateStart,dateStartTime),
+      dateStartMillis: this.dateUtilsService.getDateMillis(dateStart, dateStartTime),
       dateStartMonth: dateStart.month,
       dateStartYear: dateStart.year,
       filters: filters.map(filter => filter.shortName),

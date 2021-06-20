@@ -1,7 +1,114 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col">
-            
+    <form (ngSubmit)="onSubmit()" [formGroup]="eventForm">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="name">Event Name</label>
+                    <input id="name" class="form-control" type="text" name="name" formControlName="name">
+                </div>
+            </div>
         </div>
-    </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" class="form-control" name="category" formControlName="category">
+                        <option *ngFor="let category of categories" [ngValue]="category">
+                            {{category.emoji}} {{category.longName}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group d-flex flex-column">
+                <label for="dateStart">Starting Date</label>
+                <div class="input-group">
+                    <input class="form-control" id="startDate" placeholder="yyyy-mm-dd" name="dateStart"
+                        formControlName="dateStart" ngbDatepicker #startDate="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="startDate.toggle()" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-calendar" viewBox="0 0 16 16">
+                                <path
+                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                            </svg></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 form-group d-flex flex-column">
+                <label for="dateEnd">End Date</label>
+                <div class="input-group">
+                    <input class="form-control" id="dateEnd" placeholder="yyyy-mm-dd" name="dateEnd"
+                        formControlName="dateEnd" ngbDatepicker #dateEnd="ngbDatepicker">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="dateEnd.toggle()" type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-calendar" viewBox="0 0 16 16">
+                                <path
+                                    d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z" />
+                            </svg></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 form-group d-flex flex-column">
+                <label for="dateStartTime">Start Time</label>
+                <ngb-timepicker id="dateStartTime" name="dateStartTime" formControlName="dateStartTime"
+                    [meridian]="true" [spinners]="false"></ngb-timepicker>
+            </div>
+            <div class="col-sm-6 form-group d-flex flex-column">
+                <label for="dateEndTime">End Time</label>
+                <ngb-timepicker id="dateEndTime" name="dateEndTime" formControlName="dateEndTime" [meridian]="true"
+                    [spinners]="false"></ngb-timepicker>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="location">Event Location</label>
+                    <input id="location" class="form-control" type="text" name="location" formControlName="location">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="shortLocation">Short Location (Location name to be displayed on the calendar)</label>
+                    <input id="shortLocation" class="form-control" type="text" name="shortLocation"
+                        formControlName="shortLocation">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="price">General Price of Admission</label>
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="price">$</span>
+                        </div>
+                        <input class="form-control" type="number" name="price" aria-label="price"
+                            aria-describedby="price" formControlName="price">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-sm-12">
+                <label for="description">Text</label>
+                <textarea id="description" class="form-control" name="" rows="3"
+                    formControlName="description"></textarea>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="registrationLink">Registration Link/Website Link</label>
+                    <input id="registrationLink" class="form-control" type="text" name="registrationLink" formControlName="registrationLink">
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
