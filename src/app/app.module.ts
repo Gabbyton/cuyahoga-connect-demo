@@ -11,13 +11,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { SearchWindowComponent } from './components/search-window/search-window.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
+import { AddEventComponent } from './pages/add-event/add-event.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     SearchWindowComponent,
-    CalendarComponent
+    CalendarComponent,
+    AddEventComponent
   ],
   imports: [
     BrowserModule,
