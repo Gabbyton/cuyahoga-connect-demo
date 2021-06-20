@@ -116,5 +116,31 @@
                 <app-cropper (onCropped)="setThumbnail($event)"></app-cropper>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="contactName">Contact Name / Organization Name</label>
+                    <input id="contactName" class="form-control" type="text" name="contactName"
+                        formControlName="contactName">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="contactEmail">Contact Email <span class="text-muted">(Optional)</span></label>
+                    <input id="contactEmail" class="form-control" type="email" name="contactEmail"
+                        formControlName="contactEmail">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="contactNumber">Contact Number <span class="text-muted">(Optional)</span></label>
+                    <input id="contactNumber" class="form-control" type="text" name="contactNumber">
+                </div>
+            </div>
+        </div>
     </form>
 </div>
