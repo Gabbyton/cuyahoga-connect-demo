@@ -12,6 +12,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { SearchWindowComponent } from './components/search-window/search-window.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { AddEventComponent } from './pages/add-event/add-event.component';
+import { CropperComponent } from './components/cropper/cropper.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,8 @@ import { AddEventComponent } from './pages/add-event/add-event.component';
     HomeComponent,
     SearchWindowComponent,
     CalendarComponent,
-    AddEventComponent
+    AddEventComponent,
+    CropperComponent
   ],
   imports: [
     BrowserModule,
@@ -29,6 +32,7 @@ import { AddEventComponent } from './pages/add-event/add-event.component';
     NgbModule,
     FormsModule,
     ReactiveFormsModule,
+    ImageCropperModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
