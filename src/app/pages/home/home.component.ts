@@ -6,7 +6,6 @@ import { FormArray, FormBuilder } from '@angular/forms';
 import { Filter } from 'src/app/utils/data/models/filter.model';
 import { FilterService } from 'src/app/utils/services/model-services/filter.service';
 import { PreviewEventService } from 'src/app/utils/services/model-services/preview-event.service';
-import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
 
 @Component({
   selector: 'app-home',
@@ -14,13 +13,11 @@ import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  eventsForMonth: PreviewEvent[] = [];
-  displayEvents: PreviewEvent[] = [];
+  displayEvents: any;
   searchForm = this.formBuilder.group({
     month: [],
     category: [],
     filters: this.formBuilder.array([
-      this.formBuilder.control(null),
     ])
   });
 
@@ -56,8 +53,9 @@ export class HomeComponent implements OnInit {
 
   onSubmit(): void {
     const month = parseInt(this.searchForm.value.month);
-    this.previewEventService.getEventsForMonth(month).pipe(
-    ).subscribe(data => {
-    });
+    const category = this.searchForm.value.category.shortName;
+    let filters: string[] = [];
+    (this.searchForm.value.filters as Filter[]).forEach(filter => { filters.push(filter.shortName) });
+    this.displayEvents = this.previewEventService.getEvents(month, category, filters);
   }
 }

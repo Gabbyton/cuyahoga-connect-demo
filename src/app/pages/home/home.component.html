@@ -30,4 +30,13 @@
             </form>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <ul *ngIf="displayEvents != null">
+                <li *ngFor="let event of displayEvents | async">
+                    <pre>{{event | json}}</pre>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
