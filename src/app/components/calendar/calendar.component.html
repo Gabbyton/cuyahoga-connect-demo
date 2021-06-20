@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-1 col-md-4 col-lg-3" *ngFor="let previewEvent of previewEvents; index as i">
+            <div class="event-container d-flex flex-column" [ngStyle]="{'max-width': displayWidth+'px'}">
+                <div class='date-range-container d-flex'>
+                    <div class="date-range-unit flex-column start-date text-center">
+                        <div class="month-container">{{getMonthAbbrev(previewEvent.dateStartMonth)}}</div>
+                        <div class="day-container">{{previewEvent.dateStartDay}}</div>
+                    </div>
+                    <ng-container *ngIf="!isSameDay(previewEvent)">
+                        <div class="align-self-stretch d-flex align-items-center">
+                            <div>-</div>
+                        </div>
+                        <div class="date-range-unit flex-column end-date text-center">
+                            <div class="month-container">{{getMonthAbbrev(previewEvent.dateEndMonth)}}</div>
+                            <div class="day-container">{{previewEvent.dateEndDay}}</div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="img-container bg-dark" [ngStyle]="{
+                    'height':displayWidth+'px',
+                    'width':displayWidth+'px',
+                    'background-image':'url('+previewEvent.previewImageURL+')',
+                    'background-size':displayWidth+'px'
+                }">
+                </div>
+                <div class="event-caption">
+                    <a href="#">{{previewEvent.name}}</a><br />
+                    <p>{{previewEvent.shortLocation}}</p>
+                </div>
+                <div class="event-filters-container">
+                    <span *ngFor="let filter of previewEvent.filters">{{filter}}<br /></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+.date-range-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-5%,-5%);
+}
+
+.date-range-container>div {
+    background-color: red;
+}
+
+.date-range-unit {
+    height: 3em;
+    width: 3em;
+}
