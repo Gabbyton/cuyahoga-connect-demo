@@ -1,42 +1,12 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
-                <div class="form-group">
-                    <label for="month-select">Month:</label>
-                    <select id="month-select" class="form-control" name="month-select" formControlName="month">
-                        <option *ngFor="let month of months; index as i" [value]="i + 1">{{month}}</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="category-select">Category</label>
-                    <select id="category-select" class="form-control" name="category-select" formControlName="category">
-                        <option *ngFor="let category of categories; index as i" [ngValue]="category">{{category.emoji}}
-                            {{category.longName}}
-                        </option>
-                    </select>
-                </div>
-                <div formArrayName="filters">
-                    <div class="form-group" *ngFor="let filterSelect of filterSelects.controls; index as i">
-                        <label [for]="'filter-select-'+i">Select Filter</label>
-                        <select [id]="'filter-select-'+i" class="form-control" [name]="'filter-select-'+i"
-                            [formControlName]="i">
-                            <option *ngFor="let filter of filters" [ngValue]="filter">{{filter.longName}}</option>
-                        </select>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-light" (click)="addFilter()">Add filter select</button>
-                <button type="submit" class="btn btn-light">Search</button>
-            </form>
+            <app-search-window></app-search-window>
         </div>
     </div>
     <div class="row">
         <div class="col">
-            <ul *ngIf="displayEvents != null">
-                <li *ngFor="let event of displayEvents | async">
-                    <pre>{{event | json}}</pre>
-                </li>
-            </ul>
+            <!-- calendar here -->
         </div>
     </div>
 </div>
