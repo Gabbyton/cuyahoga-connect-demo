@@ -5,16 +5,14 @@ import { Category } from 'src/app/utils/data/models/category.model';
 import { FormArray, FormBuilder } from '@angular/forms';
 import { Filter } from 'src/app/utils/data/models/filter.model';
 import { FilterService } from 'src/app/utils/services/model-services/filter.service';
-import { PreviewEventService } from 'src/app/utils/services/model-services/preview-event.service';
-import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
+import { SearchParams } from 'src/app/utils/data/models/search-params.model';
 @Component({
   selector: 'app-search-window',
   templateUrl: './search-window.component.html',
   styleUrls: ['./search-window.component.scss']
 })
 export class SearchWindowComponent implements OnInit {
-  @Output('onStartSearch') onStartSearch = new EventEmitter<void>();
-  @Output('onEventLoaded') onDisplayEvent = new EventEmitter<PreviewEvent[]>();
+  @Output('onSearch') onSearch = new EventEmitter<SearchParams>();
   searchForm = this.formBuilder.group({
     month: [],
     category: [],
@@ -24,7 +22,6 @@ export class SearchWindowComponent implements OnInit {
   constructor(
     private categoryService: CategoryService,
     private filterService: FilterService,
-    private previewEventService: PreviewEventService,
     private formBuilder: FormBuilder,
   ) { }
 
@@ -53,15 +50,11 @@ export class SearchWindowComponent implements OnInit {
 
   onSubmit(): void {
     // get search parameters from form
-    this.onStartSearch.emit(); // signal that this component is starting search
     const month = parseInt(this.searchForm.value.month);
     const categoryObject = this.searchForm.value.category;
     const category = categoryObject == null ? null : categoryObject.shortName;
     let filters: string[] = [];
     (this.searchForm.value.filters as Filter[]).forEach(filter => { filters.push(filter.shortName) });
-    // assign events to results
-    this.previewEventService.getEvents(month, category, filters).subscribe(events => {
-      this.onDisplayEvent.emit(events);
-    });
+    this.onSearch.emit({ month: month, category: category, filters: filters } as SearchParams);
   }
 }

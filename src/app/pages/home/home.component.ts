@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
+import { SearchParams } from 'src/app/utils/data/models/search-params.model';
+import { PreviewEventService } from 'src/app/utils/services/model-services/preview-event.service';
 
 @Component({
   selector: 'app-home',
@@ -9,16 +11,18 @@ import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
 export class HomeComponent implements OnInit {
   displayEvents: PreviewEvent[] = [];
   isLoading: boolean = false;
-  constructor() { }
+  constructor(private previewEventService: PreviewEventService,) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit() {}
 
-  setEvents(events: PreviewEvent[]): void {
-    this.displayEvents = events;
-  }
-
-  startLoading(): void {
+  loadEvents(searchParams: SearchParams) {
     this.isLoading = true;
+    // assign events to results
+    this.previewEventService
+      .getEvents(searchParams.month, searchParams.category, searchParams.filters)
+      .subscribe(events => {
+        this.displayEvents = events;
+        this.isLoading = false;
+      });
   }
 }
