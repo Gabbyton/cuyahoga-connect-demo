@@ -20,6 +20,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { EventComponent } from './pages/event/event.component';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { EventFormComponent } from './components/event-form/event-form.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     FilterSelectComponent,
     ProfileComponent,
     EventComponent,
-    NavbarComponent
+    NavbarComponent,
+    EventFormComponent
   ],
   imports: [
     BrowserModule,
