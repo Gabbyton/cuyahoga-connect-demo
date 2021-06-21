@@ -26,17 +26,13 @@ export class HomeComponent implements OnInit {
   }
 
   loadEvents(searchParams: SearchParams) {
-    console.log(`on search`, searchParams);
-
     this.isLoading = true;
     // assign events to results
     this.previewEventService
       .getEvents(searchParams.month, searchParams.category, searchParams.filters)
       .subscribe(events => {
-        console.log('hello wlrd');
         this.displayEvents = [];
         this.displayEvents = events;
-        console.log(`display events: `, this.displayEvents);
         this.isLoading = false;
       });
   }

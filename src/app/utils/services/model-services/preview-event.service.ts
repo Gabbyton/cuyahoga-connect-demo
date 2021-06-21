@@ -45,7 +45,6 @@ export class PreviewEventService {
         return of(results);
       }),
       concatMap(data => {
-        console.log(`final data`, data);
         let getDownloadURLObs: Observable<any>[] = [];
         data.forEach(event => {
           getDownloadURLObs.push(
