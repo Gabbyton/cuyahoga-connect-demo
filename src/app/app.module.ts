@@ -21,6 +21,7 @@ import { EventComponent } from './pages/event/event.component';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { EventFormComponent } from './components/event-form/event-form.component';
+import { EditEventComponent } from './pages/edit-event/edit-event.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { EventFormComponent } from './components/event-form/event-form.component
     ProfileComponent,
     EventComponent,
     NavbarComponent,
-    EventFormComponent
+    EventFormComponent,
+    EditEventComponent
   ],
   imports: [
     BrowserModule,
