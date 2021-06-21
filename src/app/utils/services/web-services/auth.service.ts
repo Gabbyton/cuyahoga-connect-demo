@@ -16,6 +16,8 @@ export class AuthService {
   ) {
   }
 
+  user$: Observable<User | null | undefined> | null = null;
+
   initAuthPipe(): void {
     this.user$ = this.auth.authState.pipe(
       switchMap(user => {
@@ -27,8 +29,6 @@ export class AuthService {
     );
     console.log(`user pipe init!!`);
   }
-
-  user$: Observable<User | null | undefined> | null = null;
 
   async login() {
     const credential = await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
