@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormStyle, getLocaleMonthNames, TranslationWidth } from '@angular/common';
 import { CategoryService } from 'src/app/utils/services/model-services/category.service';
 import { Category } from 'src/app/utils/data/models/category.model';
@@ -6,6 +6,7 @@ import { FormArray, FormBuilder } from '@angular/forms';
 import { Filter } from 'src/app/utils/data/models/filter.model';
 import { FilterService } from 'src/app/utils/services/model-services/filter.service';
 import { SearchParams } from 'src/app/utils/data/models/search-params.model';
+import { DateService } from 'src/app/utils/services/general-services/date.service';
 @Component({
   selector: 'app-search-window',
   templateUrl: './search-window.component.html',
@@ -13,8 +14,10 @@ import { SearchParams } from 'src/app/utils/data/models/search-params.model';
 })
 export class SearchWindowComponent implements OnInit {
   @Output('onSearch') onSearch = new EventEmitter<SearchParams>();
+  @Input('defaultMonth') defaultMonth: number = -1;
+
   searchForm = this.formBuilder.group({
-    month: [],
+    month: [this.dateUtils.getCurrentDateMonth()],
     category: [],
     filters: this.formBuilder.array([]),
   });
@@ -23,6 +26,7 @@ export class SearchWindowComponent implements OnInit {
     private categoryService: CategoryService,
     private filterService: FilterService,
     private formBuilder: FormBuilder,
+    private dateUtils: DateService,
   ) { }
 
   ngOnInit(): void {

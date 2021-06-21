@@ -16,4 +16,9 @@ export class DateService {
   getCurrentDateinFormat(format: string) {
     return this.datePipe.transform(Date.now(), format);
   }
+
+  getCurrentDateMonth(): number {
+    const currentDate = new Date();
+    return currentDate.getMonth() + 1;
+  }
 }
