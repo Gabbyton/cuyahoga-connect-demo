@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
-import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { switchMap, tap } from 'rxjs/operators';
 import { User } from '../../data/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  userEmail = new BehaviorSubject<string | null>(null);
 
   constructor(
     private auth: AngularFireAuth,
@@ -21,6 +22,13 @@ export class AuthService {
           return this.storage.doc<User>(`users/${user.uid}`).valueChanges();
         }
         return of(null);
+      }),
+      tap(user => { // set user email value whenever auth stream is run
+        if (user) {
+          this.userEmail.next(user.email);
+        } else {
+          this.userEmail.next(null);
+        }
       }),
     );
   }

@@ -6,8 +6,8 @@ import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
 import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { DateService } from 'src/app/utils/services/general-services/date.service';
 import { CategoryService } from 'src/app/utils/services/model-services/category.service';
-import { FilterService } from 'src/app/utils/services/model-services/filter.service';
 import { Category } from 'src/app/utils/data/models/category.model';
+import { AuthService } from 'src/app/utils/services/web-services/auth.service';
 
 @Component({
   selector: 'app-add-event',
@@ -48,7 +48,7 @@ export class AddEventComponent implements OnInit {
     private formBuilder: FormBuilder,
     private dateUtilsService: DateService,
     private categoryService: CategoryService,
-    private filterService: FilterService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit(): void {
@@ -60,6 +60,15 @@ export class AddEventComponent implements OnInit {
   }
 
   onSubmit(): void {
+    const eventImageFilename = `${this.randomImageName}`;
+    const thumbImageFilename = `${eventImageFilename}-thumbnail`;
+    const results = this.eventForm.value;
+    const fullEvent = this.getFullEventObject(results, eventImageFilename);
+    // 1. upload images
+    // 2. upload full event
+    // 3. get key
+    // 4. initialize preview event with id
+    // 5. upload preview event
   }
 
   setThumbnail(thumbnail: File) {
@@ -107,13 +116,13 @@ export class AddEventComponent implements OnInit {
     return event;
   }
 
-  private getFullEventObject(results: any): FullEvent {
+  private getFullEventObject(results: any, imageURL: string): FullEvent {
     const basicEvent: Event = Object.assign({}, this.getEventObject(results));
     const dateStartTime = results.dateStartTime as NgbTimeStruct;
     const dateEndTime = results.dateEndTime as NgbTimeStruct;
     const extraProperties = {
-      imageURL: '', // from generator
-      registrationEmail: '', // from auth
+      imageURL: imageURL, // from generator
+      registrationEmail: this.authService.userEmail.value, // from auth service
       registrationLink: results.registrationLink,
       description: results.description,
       dateStartTimeHour: dateStartTime.hour,
@@ -127,11 +136,11 @@ export class AddEventComponent implements OnInit {
     return { ...basicEvent, ...extraProperties } as FullEvent;
   }
 
-  private getPreviewEventObject(results: any): PreviewEvent {
+  private getPreviewEventObject(results: any, eventId: string, previewImageURL: string): PreviewEvent {
     const basicEvent: Event = Object.assign({}, this.getEventObject(results));
     const extraProperties = {
-      eventId: '', // from firestore
-      previewImageURL: '', // from generator
+      eventId: eventId,
+      previewImageURL: previewImageURL,
     }
     return { ...basicEvent, ...extraProperties } as PreviewEvent;
   }
