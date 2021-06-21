@@ -16,6 +16,7 @@ import { CropperComponent } from './components/cropper/cropper.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { FilterSelectComponent } from './components/filter-select/filter-select.component';
 import { DatePipe } from '@angular/common';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { DatePipe } from '@angular/common';
     CalendarComponent,
     AddEventComponent,
     CropperComponent,
-    FilterSelectComponent
+    FilterSelectComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
