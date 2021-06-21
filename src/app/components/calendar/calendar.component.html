@@ -21,7 +21,7 @@
                 <div class="img-container bg-dark d-flex" [ngStyle]="{
                     'height':displayWidth+'px',
                     'width':displayWidth+'px',
-                    'background-image':'url('+previewEvent.previewImageURL+')',
+                    'background-image':'url('+(previewEvent.previewImageURL | getDownloadURL)+')',
                     'background-size':displayWidth+'px'
                 }">
                     <div class="price-container p-1 align-self-end ml-auto d-flex align-items-center">

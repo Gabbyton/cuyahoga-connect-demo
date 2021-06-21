@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
-  @Input('events') previewEvents: PreviewEvent[] = [];
+  @Input('events') previewEvents: PreviewEvent[] | null = [];
   displayWidth: number = this.getDisplayWidth();
 
   constructor(

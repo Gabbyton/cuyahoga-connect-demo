@@ -25,6 +25,12 @@ export class PreviewEventService {
       );
   }
 
+  getEventById(eventId: string): Observable<PreviewEvent | any> {
+    return this.firestore.collection<PreviewEvent>('previewEvents').doc(eventId).valueChanges().pipe(
+      first(),
+    );
+  }
+
   getEvents(month: number, category: string, filters: string[]): Observable<PreviewEvent[]> {
     return this.getEventsForMonth(month).pipe(
       concatMap((results: PreviewEvent[]) => {
@@ -43,23 +49,6 @@ export class PreviewEventService {
           }));
         }
         return of(results);
-      }),
-      concatMap(data => {
-        let getDownloadURLObs: Observable<any>[] = [];
-        data.forEach(event => {
-          getDownloadURLObs.push(
-            this.storageUtils.getDownloadURL(event.previewImageURL).pipe(
-              concatMap(url => {
-                let updatedEvent: PreviewEvent = Object.assign({}, event); // copy contents of the preview event
-                updatedEvent.previewImageURL = url; // assign the url of the copy to new url
-                return of(updatedEvent); // return the copy
-              }),
-            )
-          );
-        });
-        if (getDownloadURLObs.length > 0)
-          return forkJoin(getDownloadURLObs);
-        return of([]);
       }),
     );
   }
