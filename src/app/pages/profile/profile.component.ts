@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
+import { User } from 'src/app/utils/data/models/user.model';
 import { PreviewEventService } from 'src/app/utils/services/model-services/preview-event.service';
 import { AuthService } from 'src/app/utils/services/web-services/auth.service';
 import { StorageUtilsService } from 'src/app/utils/services/web-services/storage-utils.service';
@@ -20,7 +21,12 @@ export class ProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.retrievePosts();
+    this.user$?.pipe(
+      filter(user => user != null && user != undefined),
+      filter(user => user!.posts != null && user!.posts != undefined),
+    ).subscribe(data => {
+      this.retrievePosts(data as User);
+    })
   }
 
   get user$() {
@@ -39,22 +45,16 @@ export class ProfileComponent implements OnInit {
     return this.storageUtils.getDownloadURL(path);
   }
 
-  retrievePosts(): void {
+  retrievePosts(data: User): void {
     let postsToDisplay: Observable<PreviewEvent>[] = [];
-    this.user$?.subscribe(data => {
-      if (data != null) {
-        data?.posts.forEach(postId => {
-          const postObs = this.previewEventService.getEventById(postId);
-          if (postObs != null && postObs != undefined) {
-            postsToDisplay.push(postObs);
-          }
-        });
-        forkJoin(postsToDisplay).subscribe(posts => {
-          this.displayPosts = posts;
-        });
-      } else {
-        this.displayPosts = [];
+    data.posts.forEach(postId => {
+      const postObs = this.previewEventService.getEventById(postId);
+      if (postObs != null && postObs != undefined) {
+        postsToDisplay.push(postObs);
       }
+    });
+    forkJoin(postsToDisplay).subscribe(posts => {
+      this.displayPosts = posts;
     });
   }
 }

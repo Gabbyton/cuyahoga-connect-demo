@@ -34,7 +34,7 @@
         <hr>
         <div class="row">
             <div class="col">
-                <app-calendar [events]="this.displayPosts"></app-calendar>
+                <app-calendar [events]="displayPosts" *ngIf="displayPosts != null && displayPosts.length > 0"></app-calendar>
             </div>
         </div>
     </div>
