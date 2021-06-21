@@ -18,8 +18,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadEvents({ month: 5 } as SearchParams);
-    // this.loadEvents({ month: this.currentMonth } as SearchParams);
+    this.loadEvents({ month: this.currentMonth } as SearchParams);
   }
 
   get currentMonth() {
