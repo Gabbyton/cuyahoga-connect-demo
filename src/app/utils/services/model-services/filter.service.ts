@@ -17,4 +17,8 @@ export class FilterService {
       this.filters = data;
     });
   }
+
+  getFilter(filterShortName: string): Filter {
+    return this.filters.filter(filter => filter.shortName == filterShortName)[0];
+  }
 }

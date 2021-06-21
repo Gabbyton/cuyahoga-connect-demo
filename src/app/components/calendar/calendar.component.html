@@ -1,35 +1,50 @@
 <div class="container">
     <div class="row">
-        <div class="col-sm-1 col-md-4 col-lg-3" *ngFor="let previewEvent of previewEvents; index as i">
+        <div class="col-sm-1 col-md-4 col-lg-3 my-4" *ngFor="let previewEvent of previewEvents; index as i"
+            (click)="gotoEventPage(previewEvent.eventId)">
             <div class="event-container d-flex flex-column" [ngStyle]="{'max-width': displayWidth+'px'}">
                 <div class='date-range-container d-flex'>
-                    <div class="date-range-unit flex-column start-date text-center">
-                        <div class="month-container">{{getMonthAbbrev(previewEvent.dateStartMonth)}}</div>
+                    <div class="date-range-unit flex-column start-date justify-content-center text-center">
+                        <div class="month-container">{{getMonthAbbrev(previewEvent.dateStartMonth) | uppercase}}</div>
                         <div class="day-container">{{previewEvent.dateStartDay}}</div>
                     </div>
                     <ng-container *ngIf="!isSameDay(previewEvent)">
                         <div class="align-self-stretch d-flex align-items-center">
                             <div>-</div>
                         </div>
-                        <div class="date-range-unit flex-column end-date text-center">
-                            <div class="month-container">{{getMonthAbbrev(previewEvent.dateEndMonth)}}</div>
+                        <div class="date-range-unit flex-column end-date justify-content-center text-center">
+                            <div class="month-container">{{getMonthAbbrev(previewEvent.dateEndMonth) | uppercase}}</div>
                             <div class="day-container">{{previewEvent.dateEndDay}}</div>
                         </div>
                     </ng-container>
                 </div>
-                <div class="img-container bg-dark" [ngStyle]="{
+                <div class="img-container bg-dark d-flex" [ngStyle]="{
                     'height':displayWidth+'px',
                     'width':displayWidth+'px',
                     'background-image':'url('+previewEvent.previewImageURL+')',
                     'background-size':displayWidth+'px'
                 }">
+                    <div class="price-container p-1 align-self-end ml-auto d-flex align-items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-cash-stack" viewBox="0 0 16 16">
+                            <path d="M1 3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1H1zm7 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4z" />
+                            <path
+                                d="M0 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V5zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V7a2 2 0 0 1-2-2H3z" />
+                        </svg>
+                        <span class="ml-1">{{previewEvent.price | number: '1.2-2'}}</span>
+                    </div>
                 </div>
-                <div class="event-caption">
-                    <a href="#">{{previewEvent.name}}</a><br />
+                <div class="event-caption mt-2">
+                    <a class="text-primary" (click)="gotoEventPage(previewEvent.eventId)">
+                        <strong>{{previewEvent.name}}</strong>
+                    </a><br />
                     <p>{{previewEvent.shortLocation}}</p>
                 </div>
                 <div class="event-filters-container">
-                    <span *ngFor="let filter of previewEvent.filters">{{filter}}<br /></span>
+                    <div class="d-inline mb-1" *ngFor="let filter of previewEvent.filters" placement="bottom"
+                        [ngbTooltip]="getFilter(filter).longName">
+                        <i class="filter-icon mx-1 {{getFilter(filter).iconClass}}"></i>
+                    </div>
                 </div>
             </div>
         </div>

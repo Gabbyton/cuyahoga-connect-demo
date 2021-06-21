@@ -1,3 +1,7 @@
+.event-container {
+    cursor: pointer;
+}
+
 .date-range-container {
     position: absolute;
     top: 0;
@@ -5,11 +9,23 @@
     transform: translate(-5%,-5%);
 }
 
-.date-range-container>div {
-    background-color: red;
+.date-range-container>div, .img-container>div {
+    background-color: #FFF2CC;
 }
 
 .date-range-unit {
     height: 3em;
     width: 3em;
+}
+
+.filter-icon {
+    font-size: 1.5em;
+}
+
+.month-container {
+    font-size: 0.8em;
+}
+
+.day-container {
+    font-size: 1.2em;
 }
