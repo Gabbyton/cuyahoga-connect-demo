@@ -19,6 +19,7 @@ import { DatePipe } from '@angular/common';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { EventComponent } from './pages/event/event.component';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
     CropperComponent,
     FilterSelectComponent,
     ProfileComponent,
-    EventComponent
+    EventComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
