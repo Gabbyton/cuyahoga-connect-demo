@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Event } from 'src/app/utils/data/models/event.model';
 import { FullEvent } from 'src/app/utils/data/models/full-event.model';
@@ -19,30 +19,43 @@ import { EventFormResults } from 'src/app/utils/data/models/event-form-results.m
 })
 export class EventFormComponent implements OnInit {
   @Output('onSubmit') onSubmit = new EventEmitter<EventFormResults>();
+  @Input('contents') contents: EventFormResults | null = null;
+  private inputFullEvent: FullEvent | undefined | null = this.contents?.fullEvent;
   eventForm = this.formBuilder.group({
     // basic event
-    category: [],
-    dateStart: [], // as ngbdatestruct
-    dateEnd: [], // as ngbdatestruct
-    location: [],
-    name: [],
-    price: [],
-    shortLocation: [],
+    category: [this.contents?.fullEvent.categories[0]],
+    dateStart: [this.getDefaultDate(
+      this.inputFullEvent?.dateStartYear,
+      this.inputFullEvent?.dateStartMonth,
+      this.inputFullEvent?.dateStartDay,
+    )], // as ngbdatestruct
+    dateEnd: [
+      this.inputFullEvent?.dateEndYear,
+      this.inputFullEvent?.dateEndMonth,
+      this.inputFullEvent?.dateEndDay,
+    ], // as ngbdatestruct
+    location: [this.contents?.fullEvent.location],
+    name: [this.contents?.fullEvent.name],
+    price: [this.contents?.fullEvent.price],
+    shortLocation: [this.contents?.fullEvent.shortLocation],
 
     // full event
-    imageURL: [], // from generator
-    registrationEmail: [], // from auth
-    registrationLink: [],
-    description: [],
-    dateStartTime: [], // as ngbtimestruct
+    imageURL: [this.contents?.fullEvent.imageURL], // from generator
+    registrationEmail: [this.contents?.fullEvent.registrationEmail], // from auth
+    registrationLink: [this.contents?.fullEvent.registrationLink],
+    description: [this.contents?.fullEvent.description],
+    dateStartTime: [this.getDefaultTime(
+      this.inputFullEvent?.dateStartTimeHour,
+      this.inputFullEvent?.dateEndTimeMin,
+    )], // as ngbtimestruct
     dateEndTime: [], // as ngbtimestruct
-    contactEmail: [],
-    contactName: [],
-    contactNumber: [],
+    contactEmail: [this.contents?.fullEvent.contactEmail],
+    contactName: [this.contents?.fullEvent.contactName],
+    contactNumber: [this.contents?.fullEvent.contactNumber],
 
     // preview event
-    eventId: [], // from firestore
-    previewImageURL: [], // from croppper
+    eventId: [this.contents?.previewEvent.eventId], // from firestore
+    previewImageURL: [this.contents?.previewEvent.previewImageURL], // from croppper
   });
   private thumbnail: File | null = null;
   private image: File | null = null;
@@ -57,6 +70,18 @@ export class EventFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  getDefaultDate(year?: number, month?: number, day?: number): NgbDateStruct | null {
+    if (year == null || month == null || day == null)
+      return null;
+    return { year: year, month: month, day: day } as NgbDateStruct;
+  }
+
+  getDefaultTime(hour?: number, minute?: number): NgbTimeStruct | null {
+    if (hour == null || minute == null)
+      return null;
+    return { hour: hour, minute: minute } as NgbTimeStruct;
   }
 
   get categories(): readonly Category[] {
