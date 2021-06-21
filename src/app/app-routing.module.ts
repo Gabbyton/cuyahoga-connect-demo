@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'add-event', component: AddEventComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'profile', component: ProfileComponent },
   { path: 'event/:id', component: EventComponent },
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'profile', pathMatch: 'full' },
 ];
 
 @NgModule({

@@ -12,6 +12,7 @@ import { StorageUtilsService } from 'src/app/utils/services/web-services/storage
 import { forkJoin, of } from 'rxjs';
 import { concatMap, map } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-add-event',
@@ -89,22 +90,27 @@ export class AddEventComponent implements OnInit {
           return forkJoin({
             imageUpload: imageUploadObs.uploadChanges,
             thumbUpload: thumbUploadObs.uploadChanges,
-            registrationEmail: of(user!.email),
+            registerUser: of(user!),
           })
         }),
         concatMap(uploadData => {
           const eventId = this.firestore.createId();
           const fullEvent = this.getFullEventObject(
             results,
-            uploadData.registrationEmail,
+            uploadData.registerUser.email,
             eventImageFilename
           );
           const previewEvent = this.getPreviewEventObject(results, eventId, thumbImageFilename);
-          return forkJoin([
-            this.firestore.collection<FullEvent>('events').doc(eventId).set(fullEvent),
-            this.firestore.collection<FullEvent>('events').doc(eventId).set(fullEvent),
-            this.firestore.collection<PreviewEvent>('previewEvents').doc(eventId).set(previewEvent),
-          ]);
+          return forkJoin({
+            fullEventOpts: this.firestore.collection<FullEvent>('events').doc(eventId).set(fullEvent),
+            previewEventOpts: this.firestore.collection<PreviewEvent>('previewEvents').doc(eventId).set(previewEvent),
+            registerUser: of(uploadData.registerUser),
+            eventId: of(eventId),
+          });
+        }),
+        concatMap(uploadData => { // update posts field for this user with this event id
+          const userDoc = this.firestore.doc(`users/${uploadData.registerUser.uid}`);
+          return userDoc.update({ posts: firebase.firestore.FieldValue.arrayUnion(uploadData.eventId) });
         }),
       );
       uploadObs.subscribe(_ => {
