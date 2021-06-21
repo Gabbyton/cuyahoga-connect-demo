@@ -17,6 +17,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { FilterSelectComponent } from './components/filter-select/filter-select.component';
 import { DatePipe } from '@angular/common';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { EventComponent } from './pages/event/event.component';
+import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     AddEventComponent,
     CropperComponent,
     FilterSelectComponent,
-    ProfileComponent
+    ProfileComponent,
+    EventComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
     FormsModule,
     ReactiveFormsModule,
     ImageCropperModule,
+    AngularFireAnalyticsModule,
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]
