@@ -18,4 +18,17 @@ export class StorageUtilsService {
         catchError(_ => of('')),
       );
   }
+
+  uploadFile(file: File, filepath: string): {
+    uploadProgress: Observable<number | undefined>,
+    uploadChanges: Observable<any>
+  } {
+    const uploadTask = this.storage.upload(filepath, file);
+    return {
+      uploadProgress: uploadTask.percentageChanges(),
+      uploadChanges: uploadTask.snapshotChanges(),
+    };
+  }
+
+
 }

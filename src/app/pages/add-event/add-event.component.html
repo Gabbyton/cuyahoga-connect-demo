@@ -41,9 +41,6 @@
                 <div class="input-group">
                     <input class="form-control" id="dateEnd" placeholder="yyyy-mm-dd" name="dateEnd"
                         formControlName="dateEnd" ngbDatepicker #dateEnd="ngbDatepicker">
-                    <div class="alert alert-danger" role="alert" *ngIf="dateEndControl?.invalid">
-                        error
-                    </div>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" (click)="dateEnd.toggle()" type="button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -141,7 +138,8 @@
             <div class="col">
                 <div class="form-group">
                     <label for="contactNumber">Contact Number <span class="text-muted">(Optional)</span></label>
-                    <input id="contactNumber" class="form-control" type="text" name="contactNumber">
+                    <input id="contactNumber" class="form-control" type="text" name="contactNumber"
+                        formControlName="contactNumber">
                 </div>
             </div>
         </div>

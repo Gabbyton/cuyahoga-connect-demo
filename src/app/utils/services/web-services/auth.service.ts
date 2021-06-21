@@ -2,20 +2,21 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import firebase from 'firebase/app';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { User } from '../../data/models/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  userEmail = new BehaviorSubject<string | null>(null);
-
   constructor(
     private auth: AngularFireAuth,
     private storage: AngularFirestore,
   ) {
+  }
+
+  initAuthPipe(): void {
     this.user$ = this.auth.authState.pipe(
       switchMap(user => {
         if (user) {
@@ -23,21 +24,15 @@ export class AuthService {
         }
         return of(null);
       }),
-      tap(user => { // set user email value whenever auth stream is run
-        if (user) {
-          this.userEmail.next(user.email);
-        } else {
-          this.userEmail.next(null);
-        }
-      }),
     );
+    console.log(`user pipe init!!`);
   }
 
   user$: Observable<User | null | undefined> | null = null;
 
   async login() {
     const credential = await this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-    // this.updateUserData(credential.user);
+    this.updateUserData(credential.user);
   }
 
   updateUserData(user: firebase.User | null) {

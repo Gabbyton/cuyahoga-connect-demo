@@ -8,18 +8,22 @@ import { DateService } from 'src/app/utils/services/general-services/date.servic
 import { CategoryService } from 'src/app/utils/services/model-services/category.service';
 import { Category } from 'src/app/utils/data/models/category.model';
 import { AuthService } from 'src/app/utils/services/web-services/auth.service';
+import { StorageUtilsService } from 'src/app/utils/services/web-services/storage-utils.service';
+import { forkJoin, of } from 'rxjs';
+import { concatMap, map } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-add-event',
   templateUrl: './add-event.component.html',
-  styleUrls: ['./add-event.component.scss']
+  styleUrls: ['./add-event.component.scss'],
 })
 export class AddEventComponent implements OnInit {
   eventForm = this.formBuilder.group({
     // basic event
     category: [],
-    dateStart: [], // as ngbdstruct
-    dateEnd: [], // as ngbdstruct
+    dateStart: [], // as ngbdatestruct
+    dateEnd: [], // as ngbdatestruct
     location: [],
     name: [],
     price: [],
@@ -30,8 +34,8 @@ export class AddEventComponent implements OnInit {
     registrationEmail: [], // from auth
     registrationLink: [],
     description: [],
-    dateStartTime: [], // as {hour, minute}
-    dateEndTime: [], // as {hour, minute}
+    dateStartTime: [], // as ngbtimestruct
+    dateEndTime: [], // as ngbtimestruct
     contactEmail: [],
     contactName: [],
     contactNumber: [],
@@ -44,31 +48,71 @@ export class AddEventComponent implements OnInit {
   private image: File | null = null;
   private selectedFilters: string[] = [];
 
+  private isLoading: boolean = true;
+  private uploadProgress: number = 0;
+
   constructor(
     private formBuilder: FormBuilder,
     private dateUtilsService: DateService,
     private categoryService: CategoryService,
+    private firestore: AngularFirestore,
     private authService: AuthService,
+    private storageUtils: StorageUtilsService,
   ) { }
 
   ngOnInit(): void {
   }
 
   get categories(): readonly Category[] {
-    // return this.categoryService.categories;
-    return [];
+    return this.categoryService.categories;
   }
 
   onSubmit(): void {
-    const eventImageFilename = `${this.randomImageName}`;
-    const thumbImageFilename = `${eventImageFilename}-thumbnail`;
+    const randomImageName = this.randomImageName;
+    const eventImageFilename = `${randomImageName}-image`;
+    const thumbImageFilename = `${randomImageName}-thumbnail`;
     const results = this.eventForm.value;
-    const fullEvent = this.getFullEventObject(results, eventImageFilename);
-    // 1. upload images
-    // 2. upload full event
-    // 3. get key
-    // 4. initialize preview event with id
-    // 5. upload preview event
+    if (this.areFilesSet) {
+      const imageUploadObs = this.storageUtils.uploadFile(this.image!, eventImageFilename);
+      const thumbUploadObs = this.storageUtils.uploadFile(this.thumbnail!, thumbImageFilename);
+      // subscribe to upload progress
+      forkJoin([imageUploadObs.uploadProgress, thumbUploadObs.uploadProgress]).pipe(
+        map(data =>
+          ((data[0] == undefined ? 0 : data[0]) +
+            (data[1] == undefined ? 0 : data[1])) / 2),
+      ).subscribe(data => {
+        console.log(`upload progress: ${data}`);
+      });
+      // subscribe to main upload task
+      const uploadObs = this.authService.user$!.pipe(
+        concatMap(user => {
+          return forkJoin({
+            imageUpload: imageUploadObs.uploadChanges,
+            thumbUpload: thumbUploadObs.uploadChanges,
+            registrationEmail: of(user!.email),
+          })
+        }),
+        concatMap(uploadData => {
+          const eventId = this.firestore.createId();
+          const fullEvent = this.getFullEventObject(
+            results,
+            uploadData.registrationEmail,
+            eventImageFilename
+          );
+          const previewEvent = this.getPreviewEventObject(results, eventId, thumbImageFilename);
+          return forkJoin([
+            this.firestore.collection<FullEvent>('events').doc(eventId).set(fullEvent),
+            this.firestore.collection<FullEvent>('events').doc(eventId).set(fullEvent),
+            this.firestore.collection<PreviewEvent>('previewEvents').doc(eventId).set(previewEvent),
+          ]);
+        }),
+      );
+      uploadObs.subscribe(_ => {
+        console.log(`all upload tasks completed...`);
+      });
+    } else {
+      console.log(`files not set!!..`);
+    }
   }
 
   setThumbnail(thumbnail: File) {
@@ -98,7 +142,7 @@ export class AddEventComponent implements OnInit {
     const dateStartTime = results.dateStartTime as NgbTimeStruct;
     const dateEndTime = results.dateEndTime as NgbTimeStruct;
     let event: Event = {
-      categories: [results.category],
+      categories: [results.category.shortName],
       dateEndDay: dateEnd.day,
       dateEndMillis: this.dateUtilsService.getDateMillis(dateEnd, dateEndTime),
       dateEndMonth: dateEnd.month,
@@ -116,13 +160,13 @@ export class AddEventComponent implements OnInit {
     return event;
   }
 
-  private getFullEventObject(results: any, imageURL: string): FullEvent {
+  private getFullEventObject(results: any, registrationEmail: string, imageURL: string): FullEvent {
     const basicEvent: Event = Object.assign({}, this.getEventObject(results));
     const dateStartTime = results.dateStartTime as NgbTimeStruct;
     const dateEndTime = results.dateEndTime as NgbTimeStruct;
     const extraProperties = {
       imageURL: imageURL, // from generator
-      registrationEmail: this.authService.userEmail.value, // from auth service
+      registrationEmail: registrationEmail, // from auth service
       registrationLink: results.registrationLink,
       description: results.description,
       dateStartTimeHour: dateStartTime.hour,
@@ -143,9 +187,5 @@ export class AddEventComponent implements OnInit {
       previewImageURL: previewImageURL,
     }
     return { ...basicEvent, ...extraProperties } as PreviewEvent;
-  }
-
-  get dateEndControl() {
-    return this.eventForm.get('dateEnd');
   }
 }
