@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <form (ngSubmit)="onSubmit()" [formGroup]="eventForm">
+    <form (ngSubmit)="onSubmit()" [formGroup]="eventForm" class="registration-form">
         <div class="row">
             <div class="col">
                 <div class="form-group">
@@ -41,6 +41,9 @@
                 <div class="input-group">
                     <input class="form-control" id="dateEnd" placeholder="yyyy-mm-dd" name="dateEnd"
                         formControlName="dateEnd" ngbDatepicker #dateEnd="ngbDatepicker">
+                    <div class="alert alert-danger" role="alert" *ngIf="dateEndControl?.invalid">
+                        error
+                    </div>
                     <div class="input-group-append">
                         <button class="btn btn-outline-secondary" (click)="dateEnd.toggle()" type="button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

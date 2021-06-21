@@ -1,10 +1,9 @@
-import { Component, OnInit, Type } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Event } from 'src/app/utils/data/models/event.model';
 import { FullEvent } from 'src/app/utils/data/models/full-event.model';
 import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
 import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
-import { Filter } from 'src/app/utils/data/models/filter.model';
 import { DateService } from 'src/app/utils/services/general-services/date.service';
 import { CategoryService } from 'src/app/utils/services/model-services/category.service';
 import { FilterService } from 'src/app/utils/services/model-services/filter.service';
@@ -135,5 +134,9 @@ export class AddEventComponent implements OnInit {
       previewImageURL: '', // from generator
     }
     return { ...basicEvent, ...extraProperties } as PreviewEvent;
+  }
+
+  get dateEndControl() {
+    return this.eventForm.get('dateEnd');
   }
 }
