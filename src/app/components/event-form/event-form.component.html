@@ -112,7 +112,43 @@
             </div>
         </div>
         <div class="row">
-            <div class="col">
+            <div class="col py-3 text-center">
+                <h3>Upload Image</h3>
+            </div>
+        </div>
+        <hr>
+        <div *ngIf="this.contents != null &&  this.contents != undefined">
+            <div class="row">
+                <div class="col py-3">
+                    <h4>Previous Image</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="h-100 w-100 position-relative">
+                        <img [src]="previousImageURL" alt="previous event image preview" class="img-fluid">
+                        <div class="bg-primary position-absolute image-label bg-primary text-light p-1">
+                            Full event image
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="h-100 w-100 position-relative">
+                        <img [src]="previousThumbURL | getDownloadURL" alt="previous event thumbnail" class="img-fluid">
+                        <div class="bg-primary position-absolute image-label bg-primary text-light p-1">
+                            Thumbnail
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col py-3">
+                <h4>New Image</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col" style="height: 500px;">
                 <app-cropper (onCropped)="setThumbnail($event)" (onImageSelected)="setImage($event)"></app-cropper>
             </div>
         </div>
@@ -144,14 +180,25 @@
             </div>
         </div>
         <div class="row">
+            <div class="col py-3">
+                <h3>Select Accomodations</h3>
+            </div>
+        </div>
+        <div class="row">
             <div class="col">
                 <app-filter-select (onFilterSelect)="setSelectedFilters($event)" [initialValues]="initFilterValues">
                 </app-filter-select>
             </div>
         </div>
+        <hr>
         <div class="row">
-            <div class="col d-flex justify-content-center">
-                <button type="submit" class="btn btn-outline-primary">Submit</button>
+            <div class="col text-center">
+                <p>By clicking the button below, I agree to the <a href="#">terms and conditions</a> set by the site.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex justify-content-center py-3">
+                <button type="submit" class="btn btn-outline-primary btn-lg">Submit</button>
             </div>
         </div>
     </form>

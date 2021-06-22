@@ -117,6 +117,16 @@ export class EventFormComponent implements OnInit {
     return this.image != null && this.thumbnail != null;
   }
 
+  get previousImageURL(): string {
+    console.log(this.contents!.fullEvent.imageURL);
+    
+    return this.contents!.fullEvent.imageURL;
+  }
+
+  get previousThumbURL(): string {
+    return this.contents!.previewEvent.previewImageURL;
+  }
+
   setSelectedFilters(filters: string[]) {
     this.selectedFilters = filters;
   }

@@ -1,9 +1,22 @@
+<div class="cropper-encapsulator mx-3 d-flex flex-column position-relative">
+    <div class="button-overlay d-flex h-100 w-100 position-absolute justify-content-center align-items-center">
+        <button type="button" class="btn btn-outline-primary" (click)="fileUploadInput.click();"
+            *ngIf="selectedImage == null">
+            Upload File
+        </button>
+    </div>
+    <div class="cropper-container h-100 w-100">
+        <image-cropper [imageChangedEvent]="selectedImageEvent" [maintainAspectRatio]="true" [aspectRatio]="1"
+            format="png" [resizeToWidth]="720" [resizeToHeight]="480" (imageCropped)="imageCropped($event)"
+            (loadImageFailed)="loadImageFailed()" class="cropper">
+        </image-cropper>
+    </div>
+    <div class="py-3">
+        <button type="button" class="btn btn-outline-primary" (click)="fileUploadInput.click();"
+            *ngIf="selectedImage != null">
+            Change File
+        </button>
+    </div>
+</div>
+<!-- hidden components -->
 <input style="display: none;" type="file" accept="image/*" (change)="onFileSelected($event)" #fileUploadInput>
-<button type="button" class="btn btn-outline-primary" (click)="fileUploadInput.click();">
-    Upload File
-</button>
-
-<image-cropper [imageChangedEvent]="selectedImageEvent"
-    [maintainAspectRatio]="true" [aspectRatio]="1" format="png" [resizeToWidth]="720" [resizeToHeight]="480"
-    (imageCropped)="imageCropped($event)" (loadImageFailed)="loadImageFailed()" class="cropper">
-</image-cropper>

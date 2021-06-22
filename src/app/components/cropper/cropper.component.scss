@@ -1,5 +1,25 @@
+.cropper-encapsulator {
+    height: 500px;
+    width: inherit;
+}
+
 .cropper {
-    height: 50vh;
-    width: 50vh;
-    border: 1em dashed black;
+    height: inherit;
+    width: inherit;
+    border: 0.5em dashed black;
+    pointer-events: all;
+}
+
+.button-overlay {
+    z-index: 2;
+    pointer-events: none;
+}
+
+.button-overlay>button {
+    pointer-events: all;
+}
+
+.cropper-container {
+    z-index: 1;
+    pointer-events: none;
 }
