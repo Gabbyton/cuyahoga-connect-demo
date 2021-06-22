@@ -148,7 +148,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col" style="height: 500px;">
+            <div class="col">
                 <app-cropper (onCropped)="setThumbnail($event)" (onImageSelected)="setImage($event)"></app-cropper>
             </div>
         </div>
@@ -193,12 +193,15 @@
         <hr>
         <div class="row">
             <div class="col text-center">
-                <p>By clicking the button below, I agree to the <a href="#">terms and conditions</a> set by the site.</p>
+                <p>By clicking the button below, I agree to the <a href="#">terms and conditions</a> set by the site.
+                </p>
             </div>
         </div>
         <div class="row">
             <div class="col d-flex justify-content-center py-3">
-                <button type="submit" class="btn btn-outline-primary btn-lg">Submit</button>
+                <button type="submit" class="btn btn-outline-primary btn-lg">
+                    {{this.contents != null ? 'Update' : 'Submit'}}
+                </button>
             </div>
         </div>
     </form>
