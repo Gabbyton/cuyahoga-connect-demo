@@ -7,4 +7,6 @@ export interface EventFormResults {
     imageFile: File,
     thumbnailFile: File,
     userUID: string,
+    previousImageURL?: string;
+    previousThumbURL?: string;
 }

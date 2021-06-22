@@ -140,6 +140,7 @@ export class EventFormComponent implements OnInit {
       const eventImageFilename = `${randomImageName}-image`;
       const thumbImageFilename = `${randomImageName}-thumbnail`;
       const results = this.eventForm!.value;
+      // set event id to previous event id if the input is not null
       const eventId = this.contents != null ? this.contents!.previewEvent.eventId : this.firestore.createId();
       const previewEvent = this.getPreviewEventObject(results, eventId, thumbImageFilename);
       // retrieve auth user email and uid
@@ -157,6 +158,8 @@ export class EventFormComponent implements OnInit {
           imageFile: this.image!,
           thumbnailFile: this.thumbnail!,
           userUID: userData!.uid,
+          previousThumbURL: this.contents?.previewEvent.previewImageURL, // add previous image and thumbnail if input exists
+          previousImageURL: this.contents?.fullEvent.imageURL,
         } as EventFormResults);
       });
     } else {

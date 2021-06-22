@@ -31,12 +31,13 @@ export class EditEventComponent implements OnInit {
 
   update(formResults: EventFormResults): void {
     // delete previously uploaded images
-    const previousImageURL = formResults.fullEvent.imageURL;
-    const previousThumbURL = formResults.previewEvent.previewImageURL;
+    const previousImageURL = formResults.previousImageURL!;
+    const previousThumbURL = formResults.previousThumbURL!;
     forkJoin([
-      this.storageUtils.deleteFile(previousImageURL),
-      this.storageUtils.deleteFile(previousThumbURL),
-    ]).subscribe(_ => { // start deleting files
+      this.storageUtils.deleteFileOfURL(previousImageURL),
+      this.storageUtils.deleteFileofPath(previousThumbURL),
+    ])
+    .subscribe(_ => { // start deleting files
       console.log(`files deleted`);
     });
 
@@ -49,7 +50,8 @@ export class EditEventComponent implements OnInit {
       map(data =>
         ((data[0] == undefined ? 0 : data[0]) +
           (data[1] == undefined ? 0 : data[1])) / 2),
-    ).subscribe(data => {
+    )
+    .subscribe(data => {
       console.log(`upload progress: ${data}`);
     });
     // subscribe to main upload task
@@ -67,7 +69,8 @@ export class EditEventComponent implements OnInit {
         const userDoc = this.firestore.doc(`users/${formResults.userUID}`);
         return userDoc.update({ posts: firebase.firestore.FieldValue.arrayUnion(eventId) });
       }),
-    ).subscribe(_ => {
+    )
+    .subscribe(_ => {
       // on complete
       console.log(`process complete...`);
     });
