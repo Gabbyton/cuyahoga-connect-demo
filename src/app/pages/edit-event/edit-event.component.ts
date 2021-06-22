@@ -11,7 +11,6 @@ export class EditEventComponent implements OnInit {
   constructor(private uiService: UiService) { }
 
   ngOnInit(): void {
-    console.log(this.uiService.editEvent.value);
   }
 
   get editEvent() {

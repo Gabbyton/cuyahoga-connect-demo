@@ -35,15 +35,12 @@ export class EventFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // TODO: get category from shortname and replace for default
-    // TODO: test with null events
-    // TODO: set filter defaults
     // TODO: make previous image preview that's cancellable
     const inputFullEvent = this.contents?.fullEvent;
     const inputPreviewEvent = this.contents?.previewEvent;
     this.eventForm = this.formBuilder.group({
       // basic event
-      category: [],
+      category: [this.getCategoryObject(inputFullEvent?.categories[0]!)],
       dateStart: [this.getDefaultDate(
         inputFullEvent?.dateStartYear,
         inputFullEvent?.dateStartMonth,
@@ -80,13 +77,21 @@ export class EventFormComponent implements OnInit {
     });
   }
 
-  getDefaultDate(year?: number, month?: number, day?: number): NgbDateStruct | null {
+  get initFilterValues(): string[] {
+    const initFilters = this.contents?.fullEvent.filters;
+    if (initFilters != null && initFilters != undefined) {
+      return initFilters;
+    }
+    return [];
+  }
+
+  private getDefaultDate(year?: number, month?: number, day?: number): NgbDateStruct | null {
     if (year == null || month == null || day == null)
       return null;
     return { year: year, month: month, day: day } as NgbDateStruct;
   }
 
-  getDefaultTime(hour?: number, minute?: number): NgbTimeStruct | null {
+  private getDefaultTime(hour?: number, minute?: number): NgbTimeStruct | null {
     if (hour == null || minute == null)
       return null;
     return { hour: hour, minute: minute } as NgbTimeStruct;
@@ -94,6 +99,10 @@ export class EventFormComponent implements OnInit {
 
   get categories(): readonly Category[] {
     return this.categoryService.categories;
+  }
+
+  private getCategoryObject(shortName: string): Category {
+    return this.categories.filter(category => category.shortName == shortName)[0];
   }
 
   setThumbnail(thumbnail: File) {

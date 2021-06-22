@@ -8,7 +8,8 @@
             <div class="card-footer">
                 <div class="custom-control custom-switch">
                     <input id="filter-switch-{{i}}" class="custom-control-input" type="checkbox"
-                        name="filter-switch-{{i}}" value="true" (change)="toggleFilter($event, filter.shortName)">
+                        name="filter-switch-{{i}}" (change)="toggleFilter($event, filter.shortName)"
+                        [checked]="getFilterInitState(filter.shortName)">
                     <label for="filter-switch-{{i}}" class="custom-control-label"></label>
                 </div>
             </div>

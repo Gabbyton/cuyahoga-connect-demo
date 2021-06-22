@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { of } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FilterService } from 'src/app/utils/services/model-services/filter.service';
 
 @Component({
@@ -9,16 +8,21 @@ import { FilterService } from 'src/app/utils/services/model-services/filter.serv
 })
 export class FilterSelectComponent implements OnInit {
   @Output('onFilterSelect') onFilterSelect = new EventEmitter<string[]>();
+  @Input('initialValues') initialValues: string[] = [];
   selectedFilters: string[] = [];
-
-  constructor(private filterService: FilterService) { }
+  constructor(private filterService: FilterService,) { }
 
 
   ngOnInit(): void {
+    this.selectedFilters = [...this.selectedFilters, ...this.initialValues];
   }
 
   get filters() {
     return this.filterService.filters;
+  }
+
+  getFilterInitState(shortName: string): boolean {
+    return this.selectedFilters.includes(shortName);
   }
 
   toggleFilter(event: any, filterName: string) {
@@ -34,5 +38,4 @@ export class FilterSelectComponent implements OnInit {
       this.onFilterSelect.emit(this.selectedFilters);
     }
   }
-
 }
