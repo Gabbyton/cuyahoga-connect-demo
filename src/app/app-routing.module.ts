@@ -5,6 +5,7 @@ import { EventComponent } from './pages/event/event.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AngularFireAuthGuard, hasCustomClaim, redirectUnauthorizedTo, redirectLoggedInTo } from '@angular/fire/auth-guard';
+import { EditEventComponent } from './pages/edit-event/edit-event.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['profile']);
 
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'add-event', component: AddEventComponent, canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin } },
   { path: 'profile', component: ProfileComponent },
   { path: 'event/:id', component: EventComponent },
+  { path: 'edit-event', component: EditEventComponent, },
   { path: '', redirectTo: 'profile', pathMatch: 'full' },
 ];
 

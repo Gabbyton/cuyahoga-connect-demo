@@ -3,6 +3,9 @@ import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
 import { FormStyle, getLocaleMonthNames, TranslationWidth } from '@angular/common';
 import { FilterService } from 'src/app/utils/services/model-services/filter.service';
 import { Router } from '@angular/router';
+import { EventFormResults } from 'src/app/utils/data/models/event-form-results.model';
+import { UiService } from 'src/app/utils/services/general-services/ui.service';
+import { FullEventService } from 'src/app/utils/services/model-services/full-event.service';
 
 @Component({
   selector: 'app-calendar',
@@ -15,11 +18,24 @@ export class CalendarComponent implements OnInit {
   displayWidth: number = this.getDisplayWidth();
 
   constructor(
+    private fullEventService: FullEventService,
     private filterService: FilterService,
+    private uiService: UiService,
     private router: Router,
   ) { }
 
   ngOnInit(): void {
+  }
+
+  editEvent(previewEvent: PreviewEvent): void {
+    this.fullEventService.getEvent(previewEvent.eventId).subscribe(fullEvent => {
+      const event = {
+        fullEvent: fullEvent,
+        previewEvent: previewEvent,
+      } as EventFormResults;
+      this.uiService.editEvent.next(event);
+      this.router.navigateByUrl('/edit-event');
+    });
   }
 
   getMonthAbbrev(month: number): string {

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Event } from 'src/app/utils/data/models/event.model';
 import { FullEvent } from 'src/app/utils/data/models/full-event.model';
 import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
@@ -20,43 +20,8 @@ import { EventFormResults } from 'src/app/utils/data/models/event-form-results.m
 export class EventFormComponent implements OnInit {
   @Output('onSubmit') onSubmit = new EventEmitter<EventFormResults>();
   @Input('contents') contents: EventFormResults | null = null;
-  private inputFullEvent: FullEvent | undefined | null = this.contents?.fullEvent;
-  eventForm = this.formBuilder.group({
-    // basic event
-    category: [this.contents?.fullEvent.categories[0]],
-    dateStart: [this.getDefaultDate(
-      this.inputFullEvent?.dateStartYear,
-      this.inputFullEvent?.dateStartMonth,
-      this.inputFullEvent?.dateStartDay,
-    )], // as ngbdatestruct
-    dateEnd: [
-      this.inputFullEvent?.dateEndYear,
-      this.inputFullEvent?.dateEndMonth,
-      this.inputFullEvent?.dateEndDay,
-    ], // as ngbdatestruct
-    location: [this.contents?.fullEvent.location],
-    name: [this.contents?.fullEvent.name],
-    price: [this.contents?.fullEvent.price],
-    shortLocation: [this.contents?.fullEvent.shortLocation],
+  eventForm: FormGroup | null = null;
 
-    // full event
-    imageURL: [this.contents?.fullEvent.imageURL], // from generator
-    registrationEmail: [this.contents?.fullEvent.registrationEmail], // from auth
-    registrationLink: [this.contents?.fullEvent.registrationLink],
-    description: [this.contents?.fullEvent.description],
-    dateStartTime: [this.getDefaultTime(
-      this.inputFullEvent?.dateStartTimeHour,
-      this.inputFullEvent?.dateEndTimeMin,
-    )], // as ngbtimestruct
-    dateEndTime: [], // as ngbtimestruct
-    contactEmail: [this.contents?.fullEvent.contactEmail],
-    contactName: [this.contents?.fullEvent.contactName],
-    contactNumber: [this.contents?.fullEvent.contactNumber],
-
-    // preview event
-    eventId: [this.contents?.previewEvent.eventId], // from firestore
-    previewImageURL: [this.contents?.previewEvent.previewImageURL], // from croppper
-  });
   private thumbnail: File | null = null;
   private image: File | null = null;
   private selectedFilters: string[] = [];
@@ -70,6 +35,49 @@ export class EventFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // TODO: get category from shortname and replace for default
+    // TODO: test with null events
+    // TODO: set filter defaults
+    // TODO: make previous image preview that's cancellable
+    const inputFullEvent = this.contents?.fullEvent;
+    const inputPreviewEvent = this.contents?.previewEvent;
+    this.eventForm = this.formBuilder.group({
+      // basic event
+      category: [],
+      dateStart: [this.getDefaultDate(
+        inputFullEvent?.dateStartYear,
+        inputFullEvent?.dateStartMonth,
+        inputFullEvent?.dateStartDay,
+      )], // as ngbdatestruct
+      dateEnd: [this.getDefaultDate(
+        inputFullEvent?.dateEndYear,
+        inputFullEvent?.dateEndMonth,
+        inputFullEvent?.dateEndDay,
+      )], // as ngbdatestruct
+      location: [inputFullEvent?.location],
+      name: [inputFullEvent?.name],
+      price: [inputFullEvent?.price],
+      shortLocation: [inputFullEvent?.shortLocation],
+      // full event
+      imageURL: [inputFullEvent?.imageURL], // from generator
+      registrationEmail: [inputFullEvent?.registrationEmail], // from auth
+      registrationLink: [inputFullEvent?.registrationLink],
+      description: [inputFullEvent?.description],
+      dateStartTime: [this.getDefaultTime(
+        inputFullEvent?.dateStartTimeHour,
+        inputFullEvent?.dateEndTimeMin,
+      )], // as ngbtimestruct
+      dateEndTime: [this.getDefaultTime(
+        inputFullEvent?.dateEndTimeHour,
+        inputFullEvent?.dateEndTimeMin,
+      )], // as ngbtimestruct
+      contactEmail: [inputFullEvent?.contactEmail],
+      contactName: [inputFullEvent?.contactName],
+      contactNumber: [inputFullEvent?.contactNumber],
+      // preview event
+      eventId: [inputPreviewEvent?.eventId], // from firestore
+      previewImageURL: [inputPreviewEvent?.previewImageURL], // from croppper
+    });
   }
 
   getDefaultDate(year?: number, month?: number, day?: number): NgbDateStruct | null {
@@ -110,11 +118,11 @@ export class EventFormComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.areFilesSet && this.authService.user$ != null) {
+    if (this.areFilesSet && this.authService.user$ != null && this.eventForm != null) {
       const randomImageName = this.randomImageName;
       const eventImageFilename = `${randomImageName}-image`;
       const thumbImageFilename = `${randomImageName}-thumbnail`;
-      const results = this.eventForm.value;
+      const results = this.eventForm!.value;
       const eventId = this.firestore.createId();
       const previewEvent = this.getPreviewEventObject(results, eventId, thumbImageFilename);
       // retrieve auth user email and uid

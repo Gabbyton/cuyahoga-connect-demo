@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UiService } from 'src/app/utils/services/general-services/ui.service';
 
 @Component({
   selector: 'app-edit-event',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditEventComponent implements OnInit {
 
-  constructor() { }
+  constructor(private uiService: UiService) { }
 
   ngOnInit(): void {
+    console.log(this.uiService.editEvent.value);
+  }
+
+  get editEvent() {
+    return this.uiService.editEvent.value;
   }
 
 }

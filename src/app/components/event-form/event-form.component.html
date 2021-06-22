@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <form (ngSubmit)="submit()" [formGroup]="eventForm" class="registration-form">
+    <form (ngSubmit)="submit()" [formGroup]="eventForm!" class="registration-form" *ngIf="eventForm != null">
         <div class="row">
             <div class="col">
                 <div class="form-group">

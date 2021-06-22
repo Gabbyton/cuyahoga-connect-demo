@@ -26,7 +26,7 @@
                         <img [src]="previewEvent.previewImageURL | getDownloadURL" alt="preview image">
                     </div>
                     <div class="edit-icon-container align-self-end mr-auto p-1" *ngIf="allowEdit">
-                        <button class="btn btn-outline-primary">
+                        <button class="btn btn-outline-primary" (click)="editEvent(previewEvent)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-pencil-square" viewBox="0 0 16 16">
                                 <path
