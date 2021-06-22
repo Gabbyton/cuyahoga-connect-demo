@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class CalendarComponent implements OnInit {
   @Input('events') previewEvents: PreviewEvent[] | null = [];
+  @Input('allowEdit') allowEdit: boolean = false;
   displayWidth: number = this.getDisplayWidth();
 
   constructor(
@@ -48,5 +49,4 @@ export class CalendarComponent implements OnInit {
   getFilter(shortName: string) {
     return this.filterService.getFilter(shortName);
   }
-
 }

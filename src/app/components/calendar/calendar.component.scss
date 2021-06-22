@@ -1,3 +1,6 @@
+@import "../../../styles.scss";
+$overlay-color: #FFF2CC;
+
 .event-container {
     cursor: pointer;
 }
@@ -6,16 +9,49 @@
     position: absolute;
     top: 0;
     left: 0;
+    background-color: $overlay-color;
     transform: translate(-5%,-5%);
 }
 
-.date-range-container>div, .img-container>div {
-    background-color: #FFF2CC;
+.date-range-container, .date-range-container>div {
+    z-index: 3;
 }
 
 .date-range-unit {
     height: 3em;
     width: 3em;
+}
+
+.date-range-container>div, .img-parent-container>.price-container {
+    background-color: $overlay-color;
+}
+
+.img-parent-container {
+    position: relative;
+}
+
+.img-parent-container>div {
+    z-index: 2;
+}
+
+.img-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.img-container, .img-container>img {
+    height: inherit;
+    width: inherit;
+    z-index: 1;
+}
+
+.edit-icon-container>button {
+    background-color: $light;
+}
+
+.edit-icon-container>button:hover {
+    background-color: $primary;
 }
 
 .filter-icon {

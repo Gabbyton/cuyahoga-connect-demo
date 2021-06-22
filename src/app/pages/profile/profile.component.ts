@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
       filter(user => user!.posts != null && user!.posts != undefined),
     ).subscribe(data => {
       this.retrievePosts(data as User);
-    })
+    });
   }
 
   get user$() {
