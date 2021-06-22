@@ -118,8 +118,6 @@ export class EventFormComponent implements OnInit {
   }
 
   get previousImageURL(): string {
-    console.log(this.contents!.fullEvent.imageURL);
-    
     return this.contents!.fullEvent.imageURL;
   }
 
@@ -142,7 +140,7 @@ export class EventFormComponent implements OnInit {
       const eventImageFilename = `${randomImageName}-image`;
       const thumbImageFilename = `${randomImageName}-thumbnail`;
       const results = this.eventForm!.value;
-      const eventId = this.firestore.createId();
+      const eventId = this.contents != null ? this.contents!.previewEvent.eventId : this.firestore.createId();
       const previewEvent = this.getPreviewEventObject(results, eventId, thumbImageFilename);
       // retrieve auth user email and uid
       this.authService.user$!.pipe(

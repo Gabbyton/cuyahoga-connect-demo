@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-sm-1 col-md-4 col-lg-3 my-4" *ngFor="let previewEvent of previewEvents; index as i"
             (click)="gotoEventPage(previewEvent.eventId)">
-            <div class="event-container d-flex flex-column" [ngStyle]="{'max-width': displayWidth+'px'}">
+            <div class="event-container d-flex flex-column text-left" [ngStyle]="{'max-width': displayWidth+'px'}">
                 <div class='date-range-container d-flex'>
                     <div class="date-range-unit flex-column start-date justify-content-center text-center">
                         <div class="month-container">{{getMonthAbbrev(previewEvent.dateStartMonth) | uppercase}}</div>

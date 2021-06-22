@@ -30,5 +30,9 @@ export class StorageUtilsService {
     };
   }
 
+  deleteFile(path: string): Observable<any> {
+    return this.storage.ref(path).delete();
+  }
+
 
 }
