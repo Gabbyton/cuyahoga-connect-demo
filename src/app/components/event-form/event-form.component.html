@@ -200,7 +200,7 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-center py-3">
-                <button type="submit" class="btn btn-outline-primary btn-lg">
+                <button type="submit" class="btn btn-outline-primary btn-lg" [disabled]="disableSubmit">
                     {{this.contents != null ? 'Update' : 'Submit'}}
                 </button>
             </div>

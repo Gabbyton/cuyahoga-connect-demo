@@ -1,10 +1,6 @@
-import firebase from 'firebase/app';
 import { Component, OnInit } from '@angular/core';
 import { forkJoin } from 'rxjs';
-import { map, concatMap } from 'rxjs/operators';
 import { EventFormResults } from 'src/app/utils/data/models/event-form-results.model';
-import { FullEvent } from 'src/app/utils/data/models/full-event.model';
-import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
 import { UiService } from 'src/app/utils/services/general-services/ui.service';
 import { StorageUtilsService } from 'src/app/utils/services/web-services/storage-utils.service';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -16,11 +12,13 @@ import { EventFormResultsService } from 'src/app/utils/services/model-services/e
   styleUrls: ['./edit-event.component.scss']
 })
 export class EditEventComponent implements OnInit {
+  progressBarValue: number = 0;
+  uploadComplete: boolean = false;
+  showError: boolean = false;
 
   constructor(
     private storageUtils: StorageUtilsService,
     private eventFormResultsService: EventFormResultsService,
-    private firestore: AngularFirestore,
     private uiService: UiService,
   ) { }
 
@@ -39,7 +37,8 @@ export class EditEventComponent implements OnInit {
       this.storageUtils.deleteFileOfURL(previousImageURL),
       this.storageUtils.deleteFileofPath(previousThumbURL),
     ]).subscribe(_ => { // start deleting files
-      console.log(`files deleted`);
+    }, error => {
+      console.error(`failed to delete file...`, error);
     });
 
     const imageUploadObs = this.storageUtils.uploadFile(formResults.imageFile, formResults.fullEvent.imageURL);
@@ -50,8 +49,8 @@ export class EditEventComponent implements OnInit {
       formResults,
       imageUploadObs.uploadProgress,
       thumbUploadObs.uploadProgress,
-    ).subscribe(data => {
-      console.log(`upload progress: ${data}`);
+    ).subscribe(uploadProgress => {
+      this.progressBarValue = uploadProgress;
     });
     // subscribe to main upload task
     this.eventFormResultsService.uploadResults(
@@ -60,7 +59,7 @@ export class EditEventComponent implements OnInit {
       thumbUploadObs.uploadChanges,
     ).subscribe(_ => {
       // on complete
-      console.log(`process complete...`);
+      this.uploadComplete = true;
     });
   }
 

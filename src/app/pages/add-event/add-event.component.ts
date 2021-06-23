@@ -15,8 +15,10 @@ import { EventFormResultsService } from 'src/app/utils/services/model-services/e
   styleUrls: ['./add-event.component.scss'],
 })
 export class AddEventComponent implements OnInit {
+  progressBarValue: number = 0;
+  uploadComplete: boolean = false;
+  showError: boolean = false;
   constructor(
-    private firestore: AngularFirestore,
     private storageUtils: StorageUtilsService,
     private eventFormResultsService: EventFormResultsService,
   ) { }
@@ -36,8 +38,8 @@ export class AddEventComponent implements OnInit {
         formResults,
         imageUploadObs.uploadProgress,
         thumbUploadObs.uploadProgress,
-      ).subscribe(data => {
-        console.log(`upload progress: ${data}`);
+      ).subscribe(uploadProgress => {
+        this.progressBarValue = uploadProgress;
       });
     // subscribe to main upload task
     this.eventFormResultsService.uploadResults(
@@ -46,7 +48,7 @@ export class AddEventComponent implements OnInit {
       thumbUploadObs.uploadChanges,
     ).subscribe(_ => {
       // on complete
-      console.log(`process complete...`);
+      this.uploadComplete = true;
     });
   }
 }
