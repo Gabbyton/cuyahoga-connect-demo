@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { forkJoin } from 'rxjs';
 import { EventFormResults } from 'src/app/utils/data/models/event-form-results.model';
 import { UiService } from 'src/app/utils/services/general-services/ui.service';
 import { StorageUtilsService } from 'src/app/utils/services/web-services/storage-utils.service';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { EventFormResultsService } from 'src/app/utils/services/model-services/event-form-results.service';
 import { EventService } from 'src/app/utils/services/model-services/event.service';
 
@@ -45,7 +43,6 @@ export class EditEventComponent implements OnInit {
     const imageUploadObs = this.storageUtils.uploadFile(formResults.imageFile, formResults.fullEvent.imageURL);
     const thumbUploadObs = this.storageUtils.uploadFile(formResults.thumbnailFile, formResults.previewEvent.previewImageURL);
     // subscribe to upload progress
-    console.log(`starting upload tasks...`);
     this.eventFormResultsService.uploadResultsProgress(
       formResults,
       imageUploadObs.uploadProgress,

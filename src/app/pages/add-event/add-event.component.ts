@@ -12,6 +12,7 @@ export class AddEventComponent implements OnInit {
   progressBarValue: number = 0;
   uploadComplete: boolean = false;
   showError: boolean = false;
+  disableSubmit: boolean = false;
   constructor(
     private storageUtils: StorageUtilsService,
     private eventFormResultsService: EventFormResultsService,
@@ -26,7 +27,6 @@ export class AddEventComponent implements OnInit {
     const thumbUploadObs = this.storageUtils
       .uploadFile(formResults.thumbnailFile, formResults.previewEvent.previewImageURL);
     // subscribe to upload progress
-    console.log(`starting upload tasks...`);
     this.eventFormResultsService
       .uploadResultsProgress(
         formResults,
