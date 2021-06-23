@@ -46,4 +46,12 @@ export class HomeComponent implements OnInit {
   setMonth(month: number) {
     console.log('month selected: ', month);
   }
+
+  setCategory(shortName: string | null) {
+    if (shortName == null) {
+      console.log(`anything goes`);
+    } else {
+      console.log('category selected:', shortName);
+    }
+  }
 }

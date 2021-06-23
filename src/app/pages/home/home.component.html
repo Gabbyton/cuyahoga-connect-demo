@@ -1,8 +1,9 @@
 <div class="container-fluid">
     <!-- <app-search-window (onSearch)="loadEvents($event)" [defaultMonth]="currentMonth"></app-search-window> -->
     <div class="row">
-        <div class="col py-5">
-            <h1>I'M LOOKING FOR</h1>
+        <div class="col py-5 d-flex align-items-center">
+            <h1>I'M LOOKING FOR &nbsp;</h1>
+            <app-category-select (categorySelected)="setCategory($event)"></app-category-select>
         </div>
     </div>
     <div class="row">

@@ -10,8 +10,8 @@
 
 <ng-template #popContent>
     <div class="popover-menu-content d-flex flex-column">
-        <button class="btn btn-outline-dark my-1" *ngFor="let option of menuOptionsList; index as i"
-            (click)="setData(i)">
+        <button class="btn btn-outline-dark my-1"
+            *ngFor="let option of appendedMenuOptionsList; index as i" (click)="setData(i)">
             {{option}}
         </button>
     </div>

@@ -1,1 +1,2 @@
-<p>category-select works!</p>
+<app-basic-select menuTitle="or maybe something like..." [menuOptionsList]="filtersString" [defaultOption]="filtersString[0]"
+    (optionSelected)="selectCategory($event)" nullValue="anything" nullValueOption="Oh, nevermind"></app-basic-select>
