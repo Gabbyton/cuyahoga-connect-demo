@@ -7,8 +7,7 @@
     <hr>
     <div class="row">
         <div class="col-sm-12">
-            <app-event-form (onSubmit)="upload($event)" [disableSubmit]="showError || progressBarValue > 0">
-            </app-event-form>
+            <app-event-form (onSubmit)="upload($event)" [disableSubmit]="showError || progressBarValue > 0"></app-event-form>
         </div>
     </div>
     <div class="alert alert-danger" role="alert" *ngIf="showError">

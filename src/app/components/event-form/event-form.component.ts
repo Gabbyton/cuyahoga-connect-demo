@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Event } from 'src/app/utils/data/models/event.model';
 import { FullEvent } from 'src/app/utils/data/models/full-event.model';
 import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
@@ -41,36 +41,51 @@ export class EventFormComponent implements OnInit {
     const inputPreviewEvent = this.contents?.previewEvent;
     this.eventForm = this.formBuilder.group({
       // basic event
-      category: [this.getCategoryObject(inputFullEvent?.categories[0]!)],
-      dateStart: [this.getDefaultDate(
-        inputFullEvent?.dateStartYear,
-        inputFullEvent?.dateStartMonth,
-        inputFullEvent?.dateStartDay,
-      )], // as ngbdatestruct
-      dateEnd: [this.getDefaultDate(
-        inputFullEvent?.dateEndYear,
-        inputFullEvent?.dateEndMonth,
-        inputFullEvent?.dateEndDay,
-      )], // as ngbdatestruct
-      location: [inputFullEvent?.location],
-      name: [inputFullEvent?.name],
-      price: [inputFullEvent?.price],
-      shortLocation: [inputFullEvent?.shortLocation],
+      category: [
+        this.getCategoryObject(inputFullEvent?.categories[0]!),
+        Validators.required
+      ],
+      dateStart: [
+        this.getDefaultDate(
+          inputFullEvent?.dateStartYear,
+          inputFullEvent?.dateStartMonth,
+          inputFullEvent?.dateStartDay,
+        ),
+        Validators.required,
+      ], // as ngbdatestruct
+      dateEnd: [
+        this.getDefaultDate(
+          inputFullEvent?.dateEndYear,
+          inputFullEvent?.dateEndMonth,
+          inputFullEvent?.dateEndDay,
+        ),
+        Validators.required,
+      ], // as ngbdatestruct
+      location: [inputFullEvent?.location, Validators.required],
+      name: [inputFullEvent?.name, Validators.required],
+      price: [inputFullEvent?.price, Validators.required],
+      shortLocation: [inputFullEvent?.shortLocation, Validators.required],
       // full event
       imageURL: [inputFullEvent?.imageURL], // from generator
       registrationEmail: [inputFullEvent?.registrationEmail], // from auth
-      registrationLink: [inputFullEvent?.registrationLink],
-      description: [inputFullEvent?.description],
-      dateStartTime: [this.getDefaultTime(
-        inputFullEvent?.dateStartTimeHour,
-        inputFullEvent?.dateEndTimeMin,
-      )], // as ngbtimestruct
-      dateEndTime: [this.getDefaultTime(
-        inputFullEvent?.dateEndTimeHour,
-        inputFullEvent?.dateEndTimeMin,
-      )], // as ngbtimestruct
+      registrationLink: [inputFullEvent?.registrationLink, Validators.required],
+      description: [inputFullEvent?.description, Validators.required],
+      dateStartTime: [
+        this.getDefaultTime(
+          inputFullEvent?.dateStartTimeHour,
+          inputFullEvent?.dateEndTimeMin,
+        ),
+        Validators.required,
+      ], // as ngbtimestruct
+      dateEndTime: [
+        this.getDefaultTime(
+          inputFullEvent?.dateEndTimeHour,
+          inputFullEvent?.dateEndTimeMin,
+        ),
+        Validators.required,
+      ], // as ngbtimestruct
       contactEmail: [inputFullEvent?.contactEmail],
-      contactName: [inputFullEvent?.contactName],
+      contactName: [inputFullEvent?.contactName, Validators.required],
       contactNumber: [inputFullEvent?.contactNumber],
       // preview event
       eventId: [inputPreviewEvent?.eventId], // from firestore

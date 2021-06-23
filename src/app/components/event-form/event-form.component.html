@@ -53,13 +53,17 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6 form-group d-flex flex-column">
-                <label for="dateStartTime">Start Time</label>
+            <div class="col-sm-6 form-group d-flex flex-column time-picker-container">
+                <label for="dateStartTime">Start Time &nbsp;
+                    <span class="text-danger" *ngIf="this.eventForm.get('dateStartTime')!.invalid">(required)</span>
+                </label>
                 <ngb-timepicker id="dateStartTime" name="dateStartTime" formControlName="dateStartTime"
                     [meridian]="true" [spinners]="false"></ngb-timepicker>
             </div>
-            <div class="col-sm-6 form-group d-flex flex-column">
-                <label for="dateEndTime">End Time</label>
+            <div class="col-sm-6 form-group d-flex flex-column time-picker-container">
+                <label for="dateEndTime">End Time &nbsp;
+                    <span class="text-danger" *ngIf="this.eventForm.get('dateEndTime')!.invalid">(required)</span>
+                </label>
                 <ngb-timepicker id="dateEndTime" name="dateEndTime" formControlName="dateEndTime" [meridian]="true"
                     [spinners]="false"></ngb-timepicker>
             </div>
@@ -144,7 +148,8 @@
         </div>
         <div class="row">
             <div class="col py-3">
-                <h4>New Image</h4>
+                <h4 class="d-inline">New Image</h4>&nbsp;<span class="text-danger"
+                    *ngIf="!areFilesSet">(required)</span>
             </div>
         </div>
         <div class="row">
@@ -200,7 +205,8 @@
         </div>
         <div class="row">
             <div class="col d-flex justify-content-center py-3">
-                <button type="submit" class="btn btn-outline-primary btn-lg" [disabled]="disableSubmit">
+                <button type="submit" class="btn btn-outline-primary btn-lg"
+                    [disabled]="disableSubmit || eventForm.errors || eventForm.status == 'INVALID' || !areFilesSet">
                     {{this.contents != null ? 'Update' : 'Submit'}}
                 </button>
             </div>

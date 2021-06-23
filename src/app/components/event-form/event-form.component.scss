@@ -1,4 +1,10 @@
+@import '../../../styles.scss';
+
 .image-label {
     top: 0;
     left: 0;
+}
+
+input.ng-invalid, select.ng-invalid, textarea.ng-invalid {
+    border: 1px solid $danger;
 }
