@@ -4,6 +4,7 @@ import { UiService } from 'src/app/utils/services/general-services/ui.service';
 import { StorageUtilsService } from 'src/app/utils/services/web-services/storage-utils.service';
 import { EventFormResultsService } from 'src/app/utils/services/model-services/event-form-results.service';
 import { EventService } from 'src/app/utils/services/model-services/event.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-event',
@@ -21,9 +22,13 @@ export class EditEventComponent implements OnInit {
     private eventService: EventService,
     private eventFormResultsService: EventFormResultsService,
     private uiService: UiService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
+    if (this.editEvent == null) {
+      this.router.navigateByUrl('/eror');
+    }
   }
 
   get editEvent() {
