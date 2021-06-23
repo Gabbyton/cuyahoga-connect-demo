@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { EventFormResults } from 'src/app/utils/data/models/event-form-results.model';
 import { UiService } from 'src/app/utils/services/general-services/ui.service';
 import { FullEventService } from 'src/app/utils/services/model-services/full-event.service';
+import { EventService } from 'src/app/utils/services/model-services/event.service';
 
 @Component({
   selector: 'app-calendar',
@@ -16,8 +17,10 @@ export class CalendarComponent implements OnInit {
   @Input('events') previewEvents: PreviewEvent[] | null = [];
   @Input('allowEdit') allowEdit: boolean = false;
   displayWidth: number = this.getDisplayWidth();
+  isLoading: boolean = false;
 
   constructor(
+    private eventService: EventService,
     private fullEventService: FullEventService,
     private filterService: FilterService,
     private uiService: UiService,
@@ -28,6 +31,7 @@ export class CalendarComponent implements OnInit {
   }
 
   editEvent(previewEvent: PreviewEvent): void {
+    this.isLoading = true;
     this.fullEventService.getEvent(previewEvent.eventId).subscribe(fullEvent => {
       const event = {
         fullEvent: fullEvent,
@@ -35,6 +39,15 @@ export class CalendarComponent implements OnInit {
       } as EventFormResults;
       this.uiService.editEvent.next(event);
       this.router.navigateByUrl('/edit-event');
+    });
+  }
+
+  trashEvent(previewEvent: PreviewEvent): void {
+    this.isLoading = true;
+    this.eventService.deleteEvents(previewEvent).subscribe(_ => {
+      const deletedEventIndex = this.previewEvents!.indexOf(previewEvent);
+      this.previewEvents!.splice(deletedEventIndex, 1);
+      this.isLoading = false;
     });
   }
 

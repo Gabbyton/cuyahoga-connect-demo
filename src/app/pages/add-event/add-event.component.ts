@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FullEvent } from 'src/app/utils/data/models/full-event.model';
-import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
 import { StorageUtilsService } from 'src/app/utils/services/web-services/storage-utils.service';
-import { forkJoin } from 'rxjs';
-import { concatMap, map } from 'rxjs/operators';
-import { AngularFirestore } from '@angular/fire/firestore';
-import firebase from 'firebase/app';
 import { EventFormResults } from 'src/app/utils/data/models/event-form-results.model';
 import { EventFormResultsService } from 'src/app/utils/services/model-services/event-form-results.service';
 

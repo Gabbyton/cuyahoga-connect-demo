@@ -5,6 +5,7 @@ import { UiService } from 'src/app/utils/services/general-services/ui.service';
 import { StorageUtilsService } from 'src/app/utils/services/web-services/storage-utils.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { EventFormResultsService } from 'src/app/utils/services/model-services/event-form-results.service';
+import { EventService } from 'src/app/utils/services/model-services/event.service';
 
 @Component({
   selector: 'app-edit-event',
@@ -15,9 +16,11 @@ export class EditEventComponent implements OnInit {
   progressBarValue: number = 0;
   uploadComplete: boolean = false;
   showError: boolean = false;
+  disableSubmit: boolean = false;
 
   constructor(
     private storageUtils: StorageUtilsService,
+    private eventService: EventService,
     private eventFormResultsService: EventFormResultsService,
     private uiService: UiService,
   ) { }
@@ -30,13 +33,11 @@ export class EditEventComponent implements OnInit {
   }
 
   update(formResults: EventFormResults): void {
+    this.disableSubmit = true;
     // delete previously uploaded images
     const previousImageURL = formResults.previousImageURL!;
     const previousThumbURL = formResults.previousThumbURL!;
-    forkJoin([
-      this.storageUtils.deleteFileOfURL(previousImageURL),
-      this.storageUtils.deleteFileofPath(previousThumbURL),
-    ]).subscribe(_ => { // start deleting files
+    this.eventService.deleteImages(previousImageURL, previousThumbURL).subscribe(_ => { // start deleting files
     }, error => {
       console.error(`failed to delete file...`, error);
     });

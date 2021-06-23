@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col">
             <app-event-form [contents]="editEvent" (onSubmit)="update($event)" *ngIf="editEvent != null"
-                [disableSubmit]="showError || progressBarValue > 0">
+                [disableSubmit]="showError || progressBarValue > 0 || disableSubmit">
             </app-event-form>
         </div>
     </div>
