@@ -20,6 +20,7 @@ import { EventFormResults } from 'src/app/utils/data/models/event-form-results.m
 export class EventFormComponent implements OnInit {
   @Output('onSubmit') onSubmit = new EventEmitter<EventFormResults>();
   @Input('contents') contents: EventFormResults | null = null;
+  @Input('disableSubmit') disableSubmit: boolean = false;
   eventForm: FormGroup | null = null;
 
   private thumbnail: File | null = null;
@@ -135,7 +136,8 @@ export class EventFormComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.areFilesSet && this.authService.user$ != null && this.eventForm != null) {
+    if (this.authService.user$ != null && this.eventForm != null &&
+      (this.areFilesSet || (!this.areFilesSet && this.contents != null))) {
       const randomImageName = this.randomImageName;
       const eventImageFilename = `${randomImageName}-image`;
       const thumbImageFilename = `${randomImageName}-thumbnail`;
