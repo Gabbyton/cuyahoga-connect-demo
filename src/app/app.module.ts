@@ -26,6 +26,7 @@ import { ErrorComponent } from './pages/error/error.component';
 import { LegendComponent } from './pages/legend/legend.component';
 import { BasicSelectComponent } from './components/select/basic-select/basic-select.component';
 import { DateSelectComponent } from './components/select/date-select/date-select.component';
+import { CategorySelectComponent } from './components/select/category-select/category-select.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { DateSelectComponent } from './components/select/date-select/date-select
     LegendComponent,
     BasicSelectComponent,
     DateSelectComponent,
+    CategorySelectComponent,
   ],
   imports: [
     BrowserModule,
