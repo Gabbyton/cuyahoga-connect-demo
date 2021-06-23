@@ -52,6 +52,8 @@ $overlay-color: #FFF2CC;
 
 .menu-buttons-container>button:hover {
     background-color: $primary;
+    z-index: 3;
+    pointer-events: all;
 }
 
 .filter-icon {
