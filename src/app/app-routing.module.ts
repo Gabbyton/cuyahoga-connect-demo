@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'event/:id', component: EventComponent },
   { path: 'edit-event', component: EditEventComponent },
   { path: 'error', component: ErrorComponent },
-  { path: '', redirectTo: 'profile', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'error' },
 ];
 

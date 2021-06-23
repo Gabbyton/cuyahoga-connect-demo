@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, FormStyle, getLocaleMonthNames, TranslationWidth } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { NgbDateStruct, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 
@@ -20,5 +20,21 @@ export class DateService {
   getCurrentDateMonth(): number {
     const currentDate = new Date();
     return currentDate.getMonth() + 1;
+  }
+
+  getAbbrevMonths(): string[] {
+    let results: string[] = [];
+    getLocaleMonthNames('en-US', FormStyle.Standalone, TranslationWidth.Abbreviated).forEach(month => {
+      results.push(month);
+    });
+    return results;
+  }
+
+  getFullMonths(): string[] {
+    let results: string[] = [];
+    getLocaleMonthNames('en-US', FormStyle.Standalone, TranslationWidth.Wide).forEach(month => {
+      results.push(month);
+    });
+    return results;
   }
 }

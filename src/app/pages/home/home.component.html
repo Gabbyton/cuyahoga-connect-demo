@@ -1,7 +1,43 @@
 <div class="container-fluid">
     <!-- <app-search-window (onSearch)="loadEvents($event)" [defaultMonth]="currentMonth"></app-search-window> -->
-    <app-month-select></app-month-select>
+    <div class="row">
+        <div class="col py-5">
+            <h1>I'M LOOKING FOR</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>... and it needs to have</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col d-flex align-items-center">
+            <h2>... in the month of &nbsp;</h2>
+            <div class="select-container d-flex align-items-center px-2 py-1" [ngbPopover]="popContent"
+                [popoverTitle]="popTitle" placement="bottom">
+                <h2>{{ currentSelectorContent | uppercase }} &nbsp;</h2>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+                </svg>
+            </div>
+        </div>
+    </div>
 </div>
+
+<ng-template #popContent>
+    <div class="popover-menu-content d-flex flex-column">
+        <button class="btn btn-outline-dark my-1" *ngFor="let month of fullMonths; index as i" (click)="setMonth(i)">
+            {{month}}
+        </button>
+    </div>
+</ng-template>
+<ng-template #popTitle>
+    <div class="popover-menu-title py-1">
+        Or maybe in the month of...
+    </div>
+</ng-template>
 
 <div class="container-fluid">
     <!-- <app-calendar [events]="displayEvents" *ngIf="displayEvents != null"></app-calendar> -->
