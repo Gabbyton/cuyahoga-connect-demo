@@ -24,6 +24,7 @@ import { EventFormComponent } from './components/event-form/event-form.component
 import { EditEventComponent } from './pages/edit-event/edit-event.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { LegendComponent } from './pages/legend/legend.component';
+import { AbstractSelectComponent } from './components/select/abstract-select/abstract-select.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { LegendComponent } from './pages/legend/legend.component';
     EventFormComponent,
     EditEventComponent,
     ErrorComponent,
-    LegendComponent
+    LegendComponent,
+    AbstractSelectComponent
   ],
   imports: [
     BrowserModule,

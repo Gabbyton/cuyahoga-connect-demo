@@ -18,8 +18,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.categoryService.prefetch();
-    this.filterService.prefetch();
+    // this.categoryService.prefetch();
+    // this.filterService.prefetch();
     this.authService.initAuthPipe();
   }
 }

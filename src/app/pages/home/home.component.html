@@ -1,7 +1,12 @@
 <div class="container-fluid">
-    <app-search-window (onSearch)="loadEvents($event)" [defaultMonth]="currentMonth"></app-search-window>
+    <!-- <app-search-window (onSearch)="loadEvents($event)" [defaultMonth]="currentMonth"></app-search-window> -->
+    <app-abstract-select [selectTemplate]="custom"></app-abstract-select>
 </div>
 
 <div class="container-fluid">
-    <app-calendar [events]="displayEvents" *ngIf="displayEvents != null"></app-calendar>
+    <!-- <app-calendar [events]="displayEvents" *ngIf="displayEvents != null"></app-calendar> -->
 </div>
+
+<ng-template #custom>
+    <h2>But I'm special</h2>
+</ng-template>
