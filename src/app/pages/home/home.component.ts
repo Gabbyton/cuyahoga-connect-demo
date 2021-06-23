@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
@@ -14,7 +15,6 @@ export class HomeComponent implements OnInit {
   displayEvents: PreviewEvent[] = [];
   isLoading: boolean = false;
   private previousGetSubs: Subscription | null = null;
-  currentSelectorContent: string | null = null;
 
   constructor(
     private previewEventService: PreviewEventService,
@@ -23,20 +23,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.loadEvents({ month: this.currentMonth } as SearchParams);
-    this.setMonth(this.dateUtils.getCurrentDateMonth() - 1);
   }
 
   get currentMonth() {
     return this.dateUtils.getCurrentDateMonth();
-  }
-
-  get fullMonths(): string[] {
-    return this.dateUtils.getFullMonths();
-  }
-
-  setMonth(monthIndex: number) {
-    console.log('selected month: ', monthIndex + 1);
-    this.currentSelectorContent = this.dateUtils.getAbbrevMonths()[monthIndex];
   }
 
   loadEvents(searchParams: SearchParams) {
@@ -51,5 +41,9 @@ export class HomeComponent implements OnInit {
         this.displayEvents = events;
         this.isLoading = false;
       });
+  }
+
+  setMonth(month: number) {
+    console.log('month selected: ', month);
   }
 }

@@ -24,6 +24,8 @@ import { EventFormComponent } from './components/event-form/event-form.component
 import { EditEventComponent } from './pages/edit-event/edit-event.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { LegendComponent } from './pages/legend/legend.component';
+import { BasicSelectComponent } from './components/select/basic-select/basic-select.component';
+import { DateSelectComponent } from './components/select/date-select/date-select.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +43,8 @@ import { LegendComponent } from './pages/legend/legend.component';
     EditEventComponent,
     ErrorComponent,
     LegendComponent,
+    BasicSelectComponent,
+    DateSelectComponent,
   ],
   imports: [
     BrowserModule,
