@@ -1,0 +1,6 @@
+<app-abstract-select (itemSelected)="getMonthSelected($event)" [listContent]="months" menuTitle="choose a month" [selectTemplate]="selectTemplate">
+</app-abstract-select>
+
+<ng-template #selectTemplate>
+    <h3>{{selectBoxContent | uppercase}}</h3>
+</ng-template>

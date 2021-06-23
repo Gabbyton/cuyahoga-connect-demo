@@ -25,6 +25,7 @@ import { EditEventComponent } from './pages/edit-event/edit-event.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { LegendComponent } from './pages/legend/legend.component';
 import { AbstractSelectComponent } from './components/select/abstract-select/abstract-select.component';
+import { MonthSelectComponent } from './components/select/month-select/month-select.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AbstractSelectComponent } from './components/select/abstract-select/abs
     EditEventComponent,
     ErrorComponent,
     LegendComponent,
-    AbstractSelectComponent
+    AbstractSelectComponent,
+    MonthSelectComponent
   ],
   imports: [
     BrowserModule,

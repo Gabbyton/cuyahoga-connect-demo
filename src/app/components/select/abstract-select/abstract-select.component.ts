@@ -17,7 +17,6 @@ export class AbstractSelectComponent implements OnInit {
   }
 
   selectItem(selectedItem: string) {
-    console.log(selectedItem);
     this.listItemSelected.emit(selectedItem);
   }
 
