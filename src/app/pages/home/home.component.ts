@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
 import { SearchParams } from 'src/app/utils/data/models/search-params.model';
 import { DateService } from 'src/app/utils/services/general-services/date.service';
@@ -12,6 +13,7 @@ import { PreviewEventService } from 'src/app/utils/services/model-services/previ
 export class HomeComponent implements OnInit {
   displayEvents: PreviewEvent[] = [];
   isLoading: boolean = false;
+  private previousGetSubs: Subscription | null = null;
   constructor(
     private previewEventService: PreviewEventService,
     private dateUtils: DateService,
@@ -28,7 +30,9 @@ export class HomeComponent implements OnInit {
   loadEvents(searchParams: SearchParams) {
     this.isLoading = true;
     // assign events to results
-    this.previewEventService
+    if(this.previousGetSubs != null)
+      this.previousGetSubs.unsubscribe();
+    this.previousGetSubs = this.previewEventService
       .getEvents(searchParams.month, searchParams.category, searchParams.filters)
       .subscribe(events => {
         this.displayEvents = [];
