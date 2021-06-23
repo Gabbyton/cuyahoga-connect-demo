@@ -22,6 +22,7 @@ export class AddEventComponent implements OnInit {
   }
 
   upload(formResults: EventFormResults): void {
+    this.disableSubmit = true;
     const imageUploadObs = this.storageUtils
       .uploadFile(formResults.imageFile, formResults.fullEvent.imageURL);
     const thumbUploadObs = this.storageUtils
