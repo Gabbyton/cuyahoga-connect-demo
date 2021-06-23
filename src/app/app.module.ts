@@ -23,6 +23,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { EventFormComponent } from './components/event-form/event-form.component';
 import { EditEventComponent } from './pages/edit-event/edit-event.component';
 import { ErrorComponent } from './pages/error/error.component';
+import { LegendComponent } from './pages/legend/legend.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ErrorComponent } from './pages/error/error.component';
     NavbarComponent,
     EventFormComponent,
     EditEventComponent,
-    ErrorComponent
+    ErrorComponent,
+    LegendComponent
   ],
   imports: [
     BrowserModule,

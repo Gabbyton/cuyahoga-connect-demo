@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="row">
+        <div class="col py-5">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Icon</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let filter of filters">
+                        <td class="text-center">
+                            <i [class]="filter.iconClass" class="filter-icon"></i>
+                        </td>
+                        <td>{{filter.longName}}</td>
+                        <td class="w-50">{{filter.description}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

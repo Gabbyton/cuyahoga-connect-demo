@@ -7,6 +7,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { EditEventComponent } from './pages/edit-event/edit-event.component';
 import { ErrorComponent } from './pages/error/error.component';
+import { LegendComponent } from './pages/legend/legend.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['profile']);
 
@@ -19,11 +20,12 @@ const routes: Routes = [
     data: { authGuardPipe: redirectUnauthorizedToLogin }
   },
   { path: 'profile', component: ProfileComponent },
+  { path: 'legend', component: LegendComponent },
   { path: 'event/:id', component: EventComponent },
   { path: 'edit-event', component: EditEventComponent },
   { path: 'error', component: ErrorComponent },
   { path: '', redirectTo: 'profile', pathMatch: 'full' },
-  {path: '**', redirectTo: 'error'},
+  { path: '**', redirectTo: 'error' },
 ];
 
 @NgModule({
