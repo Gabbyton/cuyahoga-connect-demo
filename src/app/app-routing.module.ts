@@ -24,6 +24,9 @@ const routes: Routes = [
     component: AddEventComponent,
     canActivate: [AngularFireAuthGuard],
     data: { authGuardPipe: redirectUnauthorizedToLogin },
+    resolve: {
+      uiData: PrefetchResolver,
+    }
   },
   { path: 'profile', component: ProfileComponent },
   {
