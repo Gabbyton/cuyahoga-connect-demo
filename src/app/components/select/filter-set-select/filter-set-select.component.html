@@ -1,12 +1,17 @@
-<div class="select-container d-inline-flex align-items-center px-2 py-1 m-1" *ngFor="let filter of currentlySelectedFilters"
-    [ngbPopover]="popContent" [popoverTitle]="popTitle" placement="bottom">
-    <h2><i [class]="filter.iconClass"></i> {{filter.longName}} &nbsp;</h2>
+<div class="select-container d-inline-flex align-items-center px-2 py-1 m-1"
+    *ngFor="let filter of currentlySelectedFilters; index as i" [ngbPopover]="popContent" [popoverTitle]="popTitle"
+    placement="bottom" (click)="currentlyHighlightedFilter = i">
+    <h2 *ngIf="filter != null; else selectionEmpty"><i [class]="filter!.iconClass"></i> {{filter!.longName}} &nbsp;</h2>
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill"
         viewBox="0 0 16 16">
         <path
             d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
     </svg>
 </div>
+
+<ng-template #selectionEmpty>
+    <h2 class="text-muted">Select an Option&nbsp;</h2>
+</ng-template>
 
 <ng-template #popTitle>
     <div class="popover-menu-title py-1">
@@ -15,7 +20,8 @@
 </ng-template>
 <ng-template #popContent>
     <div class="popover-menu-content d-flex flex-column">
-        <button class="btn btn-outline-dark my-1" *ngFor="let option of options; index as i" (click)="selectOption(i)">
+        <button class="btn btn-outline-dark my-1" *ngFor="let option of options; index as i" (click)="selectOption(i)"
+            [disabled]="i == filterMenuIndexForWheelchair && currentlySelectedFilters.includes(wheelchairFilter)">
             {{option}}
         </button>
     </div>
