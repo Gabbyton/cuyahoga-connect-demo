@@ -22,4 +22,7 @@ export class CategoryService {
     );
   }
 
+  getCategory(shortName: string): Category {
+    return this.categories.filter(category => category.shortName == shortName)[0];
+  }
 }

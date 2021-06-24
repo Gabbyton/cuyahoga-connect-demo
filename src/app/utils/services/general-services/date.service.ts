@@ -30,6 +30,10 @@ export class DateService {
     return results;
   }
 
+  getDateObject(year: number, month: number, day: number, hour: number, minute: number): Date {
+    return new Date(year, month, day, hour, minute);
+  }
+
   getFullMonths(): string[] {
     let results: string[] = [];
     getLocaleMonthNames('en-US', FormStyle.Standalone, TranslationWidth.Wide).forEach(month => {

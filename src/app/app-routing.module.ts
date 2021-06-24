@@ -35,7 +35,12 @@ const routes: Routes = [
       uiData: PrefetchResolver,
     },
   },
-  { path: 'event/:id', component: EventComponent },
+  {
+    path: 'event/:id', component: EventComponent,
+    resolve: {
+      uiData: PrefetchResolver,
+    }
+  },
   { path: 'edit-event', component: EditEventComponent },
   { path: 'error', component: ErrorComponent },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
