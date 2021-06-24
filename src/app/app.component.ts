@@ -11,15 +11,11 @@ import { AuthService } from './utils/services/web-services/auth.service';
 export class AppComponent implements OnInit {
   title = 'cuyahoga-connect-demo';
   constructor(
-    private categoryService: CategoryService,
-    private filterService: FilterService,
     private authService: AuthService,
   ) {
   }
 
   ngOnInit(): void {
-    this.categoryService.prefetch();
-    this.filterService.prefetch();
     this.authService.initAuthPipe();
   }
 }

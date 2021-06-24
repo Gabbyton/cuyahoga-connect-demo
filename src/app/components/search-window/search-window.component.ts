@@ -14,51 +14,33 @@ import { DateService } from 'src/app/utils/services/general-services/date.servic
 })
 export class SearchWindowComponent implements OnInit {
   @Output('onSearch') onSearch = new EventEmitter<SearchParams>();
-  @Input('defaultMonth') defaultMonth: number = -1;
-
-  searchForm = this.formBuilder.group({
-    month: [this.dateUtils.getCurrentDateMonth()],
-    category: [],
-    filters: this.formBuilder.array([]),
-  });
-
-  constructor(
-    private categoryService: CategoryService,
-    private filterService: FilterService,
-    private formBuilder: FormBuilder,
-    private dateUtils: DateService,
-  ) { }
+  private month: number | null = null;
+  private category: string | null = null;
+  private filters: string[] | null = null;
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  get months(): readonly string[] {
-    return getLocaleMonthNames('en-US', FormStyle.Standalone, TranslationWidth.Abbreviated);
-  }
-
-  get categories(): readonly Category[] {
-    return this.categoryService.categories;
-  }
-
-  get filters(): readonly Filter[] {
-    return this.filterService.filters;
-  }
-
-  get filterSelects() {
-    return this.searchForm.get('filters') as FormArray;
-  }
-
-  addFilter() {
-    this.filterSelects.push(this.formBuilder.control(null));
-  }
-
   onSubmit(): void {
-    // get search parameters from form
-    const month = parseInt(this.searchForm.value.month);
-    const categoryObject = this.searchForm.value.category;
-    const category = categoryObject == null ? null : categoryObject.shortName;
-    let filters: string[] = [];
-    (this.searchForm.value.filters as Filter[]).forEach(filter => { filters.push(filter.shortName) });
-    this.onSearch.emit({ month: month, category: category, filters: filters } as SearchParams);
+    this.onSearch.emit(
+      {
+        month: this.month,
+        category: this.category,
+        filters: this.filters
+      } as SearchParams
+    );
+  }
+
+  setMonth(month: number) {
+    this.month = month;
+  }
+
+  setCategory(shortName: string | null) {
+    this.category = shortName;
+  }
+
+  setFilters(filters: string[]) {
+    this.filters = filters;
   }
 }

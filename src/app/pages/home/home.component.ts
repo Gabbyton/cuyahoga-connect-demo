@@ -24,8 +24,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.loadEvents({ month: this.currentMonth } as SearchParams);
-    this.route.data.subscribe(data => {
-      console.log(data);
+    this.route.data.subscribe(_ => {
       this.isLoading = false;
     });
   }
@@ -46,21 +45,5 @@ export class HomeComponent implements OnInit {
         this.displayEvents = events;
         this.isLoading = false;
       });
-  }
-
-  setMonth(month: number) {
-    console.log('month selected: ', month);
-  }
-
-  setCategory(shortName: string | null) {
-    if (shortName == null) {
-      console.log(`anything goes`);
-    } else {
-      console.log('category selected:', shortName);
-    }
-  }
-
-  setFilters(filters: string[]) {
-    console.log('filters selected:',filters);
   }
 }

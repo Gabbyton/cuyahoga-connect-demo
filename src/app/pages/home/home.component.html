@@ -1,25 +1,7 @@
-<div class="container-fluid">
-    <!-- <app-search-window (onSearch)="loadEvents($event)" [defaultMonth]="currentMonth"></app-search-window> -->
-    <div class="row">
-        <div class="col py-5 d-flex align-items-center">
-            <h1>I'M LOOKING FOR &nbsp;</h1>
-            <app-category-select (categorySelected)="setCategory($event)"></app-category-select>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col py-3">
-            <h2>... and it needs to have &nbsp;</h2>
-            <app-filter-set-select (selectFilters)="setFilters($event)"></app-filter-set-select>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col d-flex align-items-center">
-            <h2>... in the month of &nbsp;</h2>
-            <app-date-select (monthSelected)="setMonth($event)"></app-date-select>
-        </div>
-    </div>
+<div class="container-fluid py-3">
+    <app-search-window (onSearch)="loadEvents($event)"></app-search-window>
 </div>
 
 <div class="container-fluid">
-    <!-- <app-calendar [events]="displayEvents" *ngIf="displayEvents != null"></app-calendar> -->
+    <app-calendar [events]="displayEvents" *ngIf="displayEvents != null"></app-calendar>
 </div>
