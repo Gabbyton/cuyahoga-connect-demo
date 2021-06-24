@@ -10,7 +10,7 @@
 </div>
 
 <ng-template #selectionEmpty>
-    <h2 class="text-muted">Select an Option&nbsp;</h2>
+    <h2 class="text-muted">SELECT AN OPTION&nbsp;</h2>
 </ng-template>
 
 <ng-template #popTitle>
@@ -21,8 +21,30 @@
 <ng-template #popContent>
     <div class="popover-menu-content d-flex flex-column">
         <button class="btn btn-outline-dark my-1" *ngFor="let option of options; index as i" (click)="selectOption(i)"
-            [disabled]="i == filterMenuIndexForWheelchair && currentlySelectedFilters.includes(wheelchairFilter)">
+            [ngClass]="{'hidden': i == filterMenuIndexForWheelchair && currentlySelectedFilters.includes(wheelchairFilter)}">
             {{option}}
         </button>
+    </div>
+</ng-template>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Select Filters</h4>
+        <button type="button" class="close" (click)="modal.dismiss()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <table class="table">
+            <tbody>
+                <tr *ngFor="let filter of filters" (click)="toggleFilter(filter)" class="select-filter-row"
+                    [ngClass]="{'table-primary': selectedInclude(filter) }">
+                    <td class="text-center">
+                        <i [class]="filter.iconClass" class="filter-icon"></i>
+                    </td>
+                    <td>{{filter.longName}}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </ng-template>

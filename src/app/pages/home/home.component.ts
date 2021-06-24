@@ -1,4 +1,3 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -59,5 +58,9 @@ export class HomeComponent implements OnInit {
     } else {
       console.log('category selected:', shortName);
     }
+  }
+
+  setFilters(filters: string[]) {
+    console.log('filters selected:',filters);
   }
 }
