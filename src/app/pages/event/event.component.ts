@@ -40,8 +40,6 @@ export class EventComponent implements OnInit, OnDestroy {
 
   get categoryString(): string {
     const currentCategoryShortName = this.fullEvent!.categories[0];
-    console.log(currentCategoryShortName);
-
     const currentCategory = this.categoryService.getCategory(currentCategoryShortName);
     return `${currentCategory.emoji} ${currentCategory.longName}`;
   }
