@@ -28,6 +28,7 @@ import { BasicSelectComponent } from './components/select/basic-select/basic-sel
 import { DateSelectComponent } from './components/select/date-select/date-select.component';
 import { CategorySelectComponent } from './components/select/category-select/category-select.component';
 import { FilterSetSelectComponent } from './components/select/filter-set-select/filter-set-select.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { FilterSetSelectComponent } from './components/select/filter-set-select/
     DateSelectComponent,
     CategorySelectComponent,
     FilterSetSelectComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

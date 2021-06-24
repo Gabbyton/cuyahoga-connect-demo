@@ -1,0 +1,32 @@
+<footer class="pt-4 my-md-5 pt-md-5 mx-5 border-top">
+    <div class="row">
+        <div class="col-6 col-md">
+            <h5>Site Pages</h5>
+            <ul class="list-unstyled text-small">
+                <li *ngFor="let page of sitePages">
+                    <a class="text-muted" [routerLink]="page.path">
+                        {{page.title}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>Resources</h5>
+            <ul class="list-unstyled text-small">
+                <li *ngFor="let resource of resourceLinks">
+                    <a class="text-muted" [href]="resource.url">
+                        {{resource.name}}
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-6 col-md">
+            <h5>About</h5>
+            <ul class="list-unstyled text-small">
+                <li *ngFor="let aboutLink of aboutLinks">
+                    <a class="text-muted" [routerLink]="aboutLink.path">{{aboutLink.title}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</footer>
