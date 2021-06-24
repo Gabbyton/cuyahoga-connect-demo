@@ -82,6 +82,10 @@ export class FilterSetSelectComponent implements OnInit {
     return FilterMenuOption.WheelchairAccessibility;
   }
 
+  get filterMenuIndexForRemove() {
+    return FilterMenuOption.RemoveFilter;
+  }
+
   selectOption(index: number) {
     switch (index) {
       case FilterMenuOption.WheelchairAccessibility:
