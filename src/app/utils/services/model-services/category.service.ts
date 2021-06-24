@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { first } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, first, map, tap } from 'rxjs/operators';
 import { Category } from '../../data/models/category.model';
 
 @Injectable({
@@ -10,12 +11,15 @@ export class CategoryService {
   categories: readonly Category[] = [];
   constructor(private firestore: AngularFirestore) { }
 
-  prefetch() {
-    this.firestore.collection<Category>('categories').valueChanges().pipe(
+  prefetch(): Observable<boolean> {
+    return this.firestore.collection<Category>('categories').valueChanges().pipe(
       first(),
-    ).subscribe(data => {
-      this.categories = data;
-    });
+      tap(data => {
+        this.categories = data;
+      }),
+      map(_ => true),
+      catchError(_ => of(false)),
+    );
   }
 
 }

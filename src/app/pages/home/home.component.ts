@@ -1,5 +1,6 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { PreviewEvent } from 'src/app/utils/data/models/preview-event. model';
 import { SearchParams } from 'src/app/utils/data/models/search-params.model';
@@ -13,16 +14,21 @@ import { PreviewEventService } from 'src/app/utils/services/model-services/previ
 })
 export class HomeComponent implements OnInit {
   displayEvents: PreviewEvent[] = [];
-  isLoading: boolean = false;
+  isLoading: boolean = true;
   private previousGetSubs: Subscription | null = null;
 
   constructor(
     private previewEventService: PreviewEventService,
     private dateUtils: DateService,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
     this.loadEvents({ month: this.currentMonth } as SearchParams);
+    this.route.data.subscribe(data => {
+      console.log(data);
+      this.isLoading = false;
+    });
   }
 
   get currentMonth() {

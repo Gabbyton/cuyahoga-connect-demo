@@ -8,19 +8,30 @@ import { AngularFireAuthGuard, redirectUnauthorizedTo } from '@angular/fire/auth
 import { EditEventComponent } from './pages/edit-event/edit-event.component';
 import { ErrorComponent } from './pages/error/error.component';
 import { LegendComponent } from './pages/legend/legend.component';
+import { PrefetchResolver } from './utils/guards/prefetch.resolver';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['profile']);
 
 const routes: Routes = [
-  { path: 'home', component: HomeComponent },
+  {
+    path: 'home', component: HomeComponent,
+    resolve: {
+      uiData: PrefetchResolver,
+    }
+  },
   {
     path: 'add-event',
     component: AddEventComponent,
     canActivate: [AngularFireAuthGuard],
-    data: { authGuardPipe: redirectUnauthorizedToLogin }
+    data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
   { path: 'profile', component: ProfileComponent },
-  { path: 'legend', component: LegendComponent },
+  {
+    path: 'legend', component: LegendComponent,
+    resolve: {
+      uiData: PrefetchResolver,
+    },
+  },
   { path: 'event/:id', component: EventComponent },
   { path: 'edit-event', component: EditEventComponent },
   { path: 'error', component: ErrorComponent },

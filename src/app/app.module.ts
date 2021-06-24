@@ -27,6 +27,7 @@ import { LegendComponent } from './pages/legend/legend.component';
 import { BasicSelectComponent } from './components/select/basic-select/basic-select.component';
 import { DateSelectComponent } from './components/select/date-select/date-select.component';
 import { CategorySelectComponent } from './components/select/category-select/category-select.component';
+import { FilterSetSelectComponent } from './components/select/filter-set-select/filter-set-select.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { CategorySelectComponent } from './components/select/category-select/cat
     BasicSelectComponent,
     DateSelectComponent,
     CategorySelectComponent,
+    FilterSetSelectComponent,
   ],
   imports: [
     BrowserModule,
