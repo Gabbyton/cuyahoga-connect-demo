@@ -101,6 +101,8 @@ export class FilterSetSelectComponent implements OnInit {
           this.outputSelection();
         }
         break;
+      case FilterMenuOption.Cancel:
+        break;
       default:
         console.error('Filter Menu Error', 'option not supported...');
     }
