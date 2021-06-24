@@ -23,10 +23,10 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadEvents({ month: this.currentMonth } as SearchParams);
     this.route.data.subscribe(_ => {
       this.isLoading = false;
     });
+    this.loadEvents({ month: this.currentMonth } as SearchParams);
   }
 
   get currentMonth() {
