@@ -18,7 +18,7 @@ export class ProfileComponent implements OnInit {
     private previewEventService: PreviewEventService,
     private authService: AuthService,
     private storageUtils: StorageUtilsService,
-  ) { }
+  ) { } 
 
   ngOnInit(): void {
     this.user$?.pipe(

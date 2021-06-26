@@ -44,10 +44,15 @@ export class CalendarComponent implements OnInit {
 
   trashEvent(previewEvent: PreviewEvent): void {
     this.isLoading = true;
-    this.eventService.deleteEvents(previewEvent).subscribe(_ => {
-      const deletedEventIndex = this.previewEvents!.indexOf(previewEvent);
-      this.previewEvents!.splice(deletedEventIndex, 1);
-      this.isLoading = false;
+    this.eventService.deleteEvents(previewEvent).subscribe(returnData => {
+      if (!!returnData) {
+        const deletedEventIndex = this.previewEvents!.indexOf(previewEvent);
+        this.previewEvents!.splice(deletedEventIndex, 1);
+        this.isLoading = false;
+      }
+      else {
+        console.error('cannot delete event!', 'please make sure user is logged in.');
+      }
     });
   }
 
